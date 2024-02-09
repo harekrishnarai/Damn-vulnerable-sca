@@ -1,19 +1,25 @@
 var express = require('express');
 var marked = require('marked');
-var fs= require('fs');
+var bodyParser = require('body-parser');
 
 var app = express();
 
+app.use(bodyParser.urlencoded({extended: true}));
+
+
 app.get('/',function(req, res){
-    fs.readFile('test.md', 'utf-8', function(err,data){
-        if (err){
-            return console.log(err);
-        }
-        var html = marked(data);
-        res.send(html);
-    });
+    res.send(`
+    <form action="/markdown" method="POST">
+        <textarea name="markdown" rows="10" cols="30"></textarea>
+        <button type="submit">Submit</button>
+    </form>
+    `);
+});
 
-
+app.post('/markdown',function(req,res){
+    var markdown =req.body.markdown;
+    var html = marked(markdown);
+    res.send(html);
 });
 
 app.listen(3000, function(){
