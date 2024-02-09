@@ -1,7 +1,11 @@
 var express = require('express');
 var marked = require('marked');
 var bodyParser = require('body-parser');
-
+marked.setOptions({
+    renderer: new marked.Renderer(),
+    sanitize: true,
+    mangle: false
+  });
 var app = express();
 
 app.use(bodyParser.urlencoded({ extended: true }));
