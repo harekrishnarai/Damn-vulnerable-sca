@@ -1,0 +1,1 @@
+SCAgoat is a purposely created vulnerable application designed for educational or testing purposes. By using open source packages with known vulnerabilities, developers and security professionals can better understand common security issues and learn how to address them effectively.
