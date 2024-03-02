@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SCAGoat</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="../static/css/style.css" rel="stylesheet"> <!-- Add this line to include style.css -->
+    
+   
+</head>
+<body>
+    <!-- Particle.js Background -->
+    <div id="particles-js"></div>
+
+    <!-- Logo Container -->
+    <div class="logo-container">
+        <img src="/static/images/logo.png" alt="SCAGoat Logo" class="logo"> 
+    </div>
+
+    <!-- Summary of SCAGoat -->
+    <div class="summary">
+        <h1 class="text-3xl font-bold text-white mb-4">Welcome to SCAGoat</h1>
+        <p class="text-lg text-white mb-6">SCAGoat is a vulnerable web application that is designed to help security enthusiasts, developers, and students to discover and mitigate security vulnerabilities in their applications. It is a collection of security vulnerabilities and misconfigurations that can be used to test the security tools and applications.</p>
+        <p class="text-lg text-white mb-6">SCAGoat is designed to be used as a learning tool and is not recommended to be used in a production environment.</p>
+    </div>
+
+    <!-- Particle.js Library -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script>
+        // Particle.js configuration
+        particlesJS('particles-js', {
+            "particles": {
+                "number": {
+                    "value": 80,
+                    "density": {
+                        "enable": true,
+                        "value_area": 800
+                    }
+                },
+                "color": {
+                    "value": "#ffffff"
+                },
+                "shape": {
+                    "type": "circle",
+                    "stroke": {
+                        "width": 0,
+                        "color": "#000000"
+                    },
+                    "polygon": {
+                        "nb_sides": 5
+                    }
+                },
+                "opacity": {
+                    "value": 0.5,
+                    "random": false,
+                    "anim": {
+                        "enable": false,
+                        "speed": 1,
+                        "opacity_min": 0.1,
+                        "sync": false
+                    }
+                },
+                "size": {
+                    "value": 3,
+                    "random": true,
+                    "anim": {
+                        "enable": false,
+                        "speed": 40,
+                        "size_min": 0.1,
+                        "sync": false
+                    }
+                },
+                "line_linked": {
+                    "enable": true,
+                    "distance": 150,
+                    "color": "#ffffff",
+                    "opacity": 0.4,
+                    "width": 1
+                },
+                "move": {
+                    "enable": true,
+                    "speed": 6,
+                    "direction": "none",
+                    "random": false,
+                    "straight": false,
+                    "out_mode": "out",
+                    "bounce": false,
+                    "attract": {
+                        "enable": false,
+                        "rotateX": 600,
+                        "rotateY": 1200
+                    }
+                }
+            },
+            "interactivity": {
+                "detect_on": "canvas",
+                "events": {
+                    "onhover": {
+                        "enable": true,
+                        "mode": "grab"
+                    },
+                    "onclick": {
+                        "enable": true,
+                        "mode": "push"
+                    },
+                    "resize": true
+                },
+                "modes": {
+                    "grab": {
+                        "distance": 140,
+                        "line_linked": {
+                            "opacity": 1
+                        }
+                    },
+                    "bubble": {
+                        "distance": 400,
+                        "size": 40,
+                        "duration": 2,
+                        "opacity": 8,
+                        "speed": 3
+                    },
+                    "repulse": {
+                        "distance": 200,
+                        "duration": 0.4
+                    },
+                    "push": {
+                        "particles_nb": 4
+                    },
+                    "remove": {
+                        "particles_nb": 2
+                    }
+                }
+            },
+            "retina_detect": true
+        });
+    </script>
+
+<div class="wrapper">
+    <a href="#" class="icon-container facebook">
+      <i class="icon fab fa-facebook-f"></i>
+    </a>
+    <a href="#" class="icon-container twitter">
+      <i class="icon fab fa-twitter"></i>
+    </a>
+    <a href="#" class="icon-container youtube">
+      <i class="icon fab fa-youtube"></i>
+    </a>
+    <a href="#" class="icon-container github">
+      <i class="icon fab fa-github"></i>
+    </a>
+    <a href="#" class="icon-container linkedin">
+      <i class="icon fab fa-linkedin-in"></i>
+    </a>
+  </div> 
+</body>
+</html>
