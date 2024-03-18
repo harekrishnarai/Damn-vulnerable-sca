@@ -47,17 +47,81 @@
 		<dependency>
 			<groupId>br.com.anteros</groupId>
 			<artifactId>Anteros-Core</artifactId>
+			<exclusions>
+    			<exclusion>
+        			<groupId>org.slf4j</groupId>
+       				<artifactId>slf4j-log4j12</artifactId>
+    			</exclusion>
+    			<exclusion>
+           			<groupId>org.springframework.boot</groupId>
+            		<artifactId>spring-boot-starter-logging</artifactId>
+        		</exclusion>
+        		<exclusion>
+                	<groupId>org.apache.logging.log4j</groupId>
+                	<artifactId>log4j-to-slf4j</artifactId>
+            	</exclusion>
+            <!-- Exclude log4j-api -->
+            	<exclusion>
+                	<groupId>org.apache.logging.log4j</groupId>
+                	<artifactId>log4j-api</artifactId>
+            	</exclusion>
+            <!-- Exclude log4j-core -->
+            	<exclusion>
+                	<groupId>org.apache.logging.log4j</groupId>
+                	<artifactId>log4j-core</artifactId>
+            	</exclusion>
+    <!-- Add other exclusions if needed -->
+			</exclusions>
 			<version>1.1.9</version>
 		</dependency>
 		<dependency>
 			<groupId>br.com.anteros</groupId>
 			<artifactId>Anteros-DBCP</artifactId>
+			<exclusions>
+    			<exclusion>
+        			<groupId>org.slf4j</groupId>
+       				<artifactId>slf4j-log4j12</artifactId>
+    			</exclusion>
+    			<exclusion>
+           			<groupId>org.springframework.boot</groupId>
+            		<artifactId>spring-boot-starter-logging</artifactId>
+        		</exclusion>
+        		<exclusion>
+                	<groupId>org.apache.logging.log4j</groupId>
+                	<artifactId>log4j-to-slf4j</artifactId>
+            	</exclusion>
+            <!-- Exclude log4j-api -->
+            	<exclusion>
+                	<groupId>org.apache.logging.log4j</groupId>
+                	<artifactId>log4j-api</artifactId>
+            	</exclusion>
+            <!-- Exclude log4j-core -->
+            	<exclusion>
+                	<groupId>org.apache.logging.log4j</groupId>
+                	<artifactId>log4j-core</artifactId>
+            	</exclusion>
+    <!-- Add other exclusions if needed -->
+			</exclusions>
 			<version>1.0.1</version>
 		</dependency>
 		<dependency>
 			<groupId>com.codahale.metrics</groupId>
 			<artifactId>metrics-healthchecks</artifactId>
 			<version>3.0.2</version>
+		</dependency>
+		<dependency>
+    		<groupId>org.springframework.boot</groupId>
+    		<artifactId>spring-boot-starter</artifactId>
+    		<exclusions>
+        		<exclusion>
+           			<groupId>org.springframework.boot</groupId>
+            		<artifactId>spring-boot-starter-logging</artifactId>
+        		</exclusion>
+    		</exclusions>
+		</dependency>
+		<dependency>
+    		<groupId>org.springframework.boot</groupId>
+    		<artifactId>spring-boot-starter-log4j2</artifactId>
 		</dependency>
 
 		<!-- Test deps -->
