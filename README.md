@@ -35,6 +35,7 @@ docker run -p 8000:3000 sca-goat
 ```
 Step 3. Visit http://localhost:8000/ to access the application
 
+
 ## What Coming?
 
 Our aim is to provide you with a better understanding of vulnerable packages and JAR dependencies so that you can gain hands-on experience. We will keep you updated with the latest CVEs. Stay tuned!
