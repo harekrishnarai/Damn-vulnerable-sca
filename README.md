@@ -29,3 +29,7 @@ CVE-2017-1000427,
 
 Our aim is to provide you with a better understanding of vulnerable packages and JAR dependencies so that you can gain hands-on experience. We will keep you updated with the latest CVEs. Stay tuned!
 
+<b>Contributing</b>
+<hr>
+Want to contribute? Awesome! The most basic way to show your support is to star the project, or to raise issues.
+
