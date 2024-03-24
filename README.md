@@ -28,7 +28,11 @@ Step 1. Clone the application
 ```bash
 git clone https://github.com/harekrishnarai/Damn-vulnerable-sca.git
 ```
-Step 2. Use the following docker commands to build the image for the dockerfile and run the image to access the application:
+Step 2. Go to the Directory
+```bash
+cd Damn-vulnerable-sca
+```
+Step 3. Use the following docker commands to build the image for the dockerfile and run the image to access the application:
 ```bash
 docker build -t sca-goat .
 docker run -p 8000:3000 sca-goat
