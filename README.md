@@ -5,7 +5,7 @@
 </p>
 
 
-<h1>What is SCA-Goat?</h1>
+## What is SCA-Goat?
 
 SCAGoat is an application for Software Composition Analysis (SCA) that focuses on vulnerable JAR dependencies used in development code, providing users with hands-on learning opportunities to understand potential attack scenarios. It is designed to identify vulnerabilities that may arise from using vulnerable JAR files.
 
@@ -34,4 +34,6 @@ Our aim is to provide you with a better understanding of vulnerable packages and
 
 Awesome! The most basic way to show your support is to star the project or raise issues.
 
+[![Fork this project](https://img.shields.io/github/forks/harekrishnarai/Damn-vulnerable-sca.svg?style=social)](https://github.com/harekrishnarai/Damn-vulnerable-sca/fork)
+[![Start contributing](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/harekrishnarai/Damn-vulnerable-sca/issues)
 
