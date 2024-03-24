@@ -37,7 +37,7 @@ Step 3. Use the following docker commands to build the image for the dockerfile 
 docker build -t sca-goat .
 docker run -p 8000:3000 sca-goat
 ```
-Step 3. Visit http://localhost:8000/ to access the application
+Step 4. Visit http://localhost:8000/ to access the application
 
 
 ## What Coming?
