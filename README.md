@@ -23,7 +23,17 @@ The CVEs covered under SCAGoat are primarily critical and high severity, which h
 | CVE-2017-16114 | Marked       | [https://github.com/markedjs/marked/issues/926](https://github.com/markedjs/marked/issues/926) |
 
 
-
+## Steps to run SCAGoat
+Step 1. Clone the application
+```bash
+git clone https://github.com/harekrishnarai/Damn-vulnerable-sca.git
+```
+Step 2. Use the following docker commands to build the image for the dockerfile and run the image to access the application:
+```bash
+docker build -t sca-goat .
+docker run -p 8000:3000 sca-goat
+```
+Step 3. Visit http://localhost:8000/ to access the application
 
 ## What Coming?
 
