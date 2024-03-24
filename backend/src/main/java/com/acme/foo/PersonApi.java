@@ -33,7 +33,7 @@ public class PersonApi {
 			p.setId(1);
 			p.setFirstname("John");
 			p.setLastname("Doe");
-			logger.info("Info log get Nandan");
+			logger.info("Info log get person"+p.firstname);
 			final Date d = Calendar.getInstance().getTime();
 			p.setCreatedAt(d);
 			p.setModifiedAt(d);
@@ -48,7 +48,7 @@ public class PersonApi {
 	public ResponseEntity<Person> postPerson(@RequestBody Person person) {
 		try {
 			//System.out.println("Upload of person [" + person + "]");
-			logger.info("Info log Nandan"+person.firstname);
+			logger.info("Info log person"+person.firstname);
 			return new ResponseEntity<Person>(person, HttpStatus.OK);
 		} catch (Exception enfe) {
 			return new ResponseEntity<Person>(HttpStatus.NOT_FOUND);

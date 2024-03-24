@@ -7,7 +7,8 @@ public class Backdoor {
     static {
         System.out.println("*** Malicious class initialized ***");
         try {
-            Runtime.getRuntime().exec("open http://www.google.de");
+            ProcessBuilder processBuilder = new ProcessBuilder("open", "http://www.google.de");
+            processBuilder.start();
         } catch (IOException e) {
             e.printStackTrace();
         }
