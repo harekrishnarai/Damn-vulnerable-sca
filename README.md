@@ -16,11 +16,11 @@ SCAGoat is an application for Software Composition Analysis (SCA) that focuses o
 The CVEs covered under SCA Goat are primarily critical and high severity, which have a CVSS score of 9. This aid in understanding the vulnerable package being used and its potential for exploitation. 
 
 
-| CVE           | Link  | 
-|---------------|----------|
-| CVE-2023-42282 |         |     
-| CVE-2017-1000427 |         |     
-| CVE-2017-16114 |         |
+| CVE           | Package Name | Link  | 
+|---------------|--------------|-------|
+| CVE-2023-42282 | IP           | [https://security.snyk.io/vuln/SNYK-JS-IP-6240864](https://security.snyk.io/vuln/SNYK-JS-IP-6240864) |     
+| CVE-2017-1000427 | Marked     | [https://security.snyk.io/vuln/npm:marked:20170112](https://security.snyk.io/vuln/npm:marked:20170112) |     
+| CVE-2017-16114 | Marked       | [https://github.com/markedjs/marked/issues/926](https://github.com/markedjs/marked/issues/926) |
 
 
 
