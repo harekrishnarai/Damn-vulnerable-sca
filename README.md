@@ -15,11 +15,12 @@ SCAGoat is an application for Software Composition Analysis (SCA) that focuses o
 
 The CVEs covered under SCA Goat are primarily critical and high severity, which have a CVSS score of 9. This aid in understanding the vulnerable package being used and its potential for exploitation. 
 
-The specific CVEs include :
 
-`CVE-2023-42282`, 
-`CVE-2017-1000427`, 
- `CVE-2017-16114`
+| CVE           | Link  | 
+|---------------|----------|
+| CVE-2023-42282 |         |     
+| CVE-2017-10427 |         |     
+| CVE-2017-16114 |         |
 
 
 
