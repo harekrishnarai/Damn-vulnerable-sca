@@ -11,9 +11,9 @@ SCAGoat is an application for Software Composition Analysis (SCA) that focuses o
 
 
 
-<h1></b>What All CVE Covered?</h1>
+## What All CVE Covered?
 
-The CVEs covered under SCA Goat are primarily critical and high severity, which have a CVSS score of 9. This aid in understanding the vulnerable package being used and its potential for exploitation. 
+The CVEs covered under SCAGoat are primarily critical and high severity, which have a CVSS score of 9. This aid in understanding the vulnerable package being used and its potential for exploitation. 
 
 
 | CVE           | Package Name | Link  | 
@@ -25,11 +25,13 @@ The CVEs covered under SCA Goat are primarily critical and high severity, which 
 
 
 
-<h2>What Coming?</h2> 
+## What Coming?
 
 Our aim is to provide you with a better understanding of vulnerable packages and JAR dependencies so that you can gain hands-on experience. We will keep you updated with the latest CVEs. Stay tuned!
 
-<h2>Contributing</h2>
 
-Want to contribute? Awesome! The most basic way to show your support is to star the project, or to raise issues.
+## Want to contribute?
+
+Awesome! The most basic way to show your support is to star the project or raise issues.
+
 
