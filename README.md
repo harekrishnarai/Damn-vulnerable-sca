@@ -19,7 +19,7 @@ The CVEs covered under SCA Goat are primarily critical and high severity, which 
 | CVE           | Link  | 
 |---------------|----------|
 | CVE-2023-42282 |         |     
-| CVE-2017-10427 |         |     
+| CVE-2017-1000427 |         |     
 | CVE-2017-16114 |         |
 
 
