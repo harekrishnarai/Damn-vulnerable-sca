@@ -21,6 +21,7 @@ The CVEs covered under SCAGoat are primarily critical and high severity, which h
 | CVE-2023-42282 | IP           | [https://security.snyk.io/vuln/SNYK-JS-IP-6240864](https://security.snyk.io/vuln/SNYK-JS-IP-6240864) |     
 | CVE-2017-1000427 | Marked     | [https://security.snyk.io/vuln/npm:marked:20170112](https://security.snyk.io/vuln/npm:marked:20170112) |     
 | CVE-2017-16114 | Marked       | [https://github.com/markedjs/marked/issues/926](https://github.com/markedjs/marked/issues/926) |
+| CVE-2021-44228 | log4j        | [https://nvd.nist.gov/vuln/detail/CVE-2021-44228](https://nvd.nist.gov/vuln/detail/CVE-2021-44228)|
 
 
 ## Steps to run SCAGoat
