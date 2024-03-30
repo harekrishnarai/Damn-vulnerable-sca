@@ -1,6 +1,6 @@
 FROM openjdk:11
 WORKDIR /app
-COPY . .
+COPY ./backend .
 RUN apt-get update && apt-get install -y maven
 RUN mvn clean install
 EXPOSE 8080
