@@ -62,7 +62,7 @@ Our aim is to provide you with a better understanding of vulnerable packages and
 <br>Awesome! The most basic way to show your support is to star the project or raise issues.
 
 ## Contributors
-Thanks to all the people who already contributed!
+Thanks to all the people who already contributed!  
 [Prashant Venkatesh](https://www.linkedin.com/in/prashant-venkatesh-99018999/)    
 [Nandan Gupta](https://www.linkedin.com/in/prashant-venkatesh-99018999/)  
 [Hare Krishna Rai](https://www.linkedin.com/in/harekrishnarai/)  
