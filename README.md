@@ -55,7 +55,6 @@ Our aim is to provide you with a better understanding of vulnerable packages and
 | Henrik Plate       | [https://www.linkedin.com/in/henrikplate/](https://www.linkedin.com/in/henrikplate/) |
 | Gaurav Joshi       | [https://www.linkedin.com/in/gauravjoshii/](https://www.linkedin.com/in/gauravjoshii/) |
 
-<br>
 
 ## POC :
 
@@ -63,9 +62,8 @@ Our aim is to provide you with a better understanding of vulnerable packages and
 |---------------|
 | [Demo 1](https://www.youtube.com/watch?v=MXAuqGiB354) |               
 | [Demo 2](https://youtu.be/HgLKVtKh87w) |          
-| Demo 3 |       
+| [Demo 3](https://youtu.be/BljNgBZxbgo) |       
 
-<br> 
 
 ## Want to contribute?
 
