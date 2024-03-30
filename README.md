@@ -35,10 +35,9 @@ cd Damn-vulnerable-sca
 ```
 Step 3. Use the following docker commands to build the image for the dockerfile and run the image to access the application:
 ```bash
-docker build -t sca-goat .
-docker run -p 8000:3000 sca-goat
+docker compose up
 ```
-Step 4. Visit http://localhost:8000/ to access the application
+Step 4. Visit http://localhost:3000/ to access the nodejs application and http://localhost:8080 for Springboot for log4j
 
 
 ## What's Coming?
