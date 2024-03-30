@@ -47,15 +47,6 @@ Our aim is to provide you with a better understanding of vulnerable packages and
 
 <br>
 
-| Contributors       |  Linkedin |
-|--------------------|-----------|
-| Prashant Venkatesh |  [https://www.linkedin.com/in/prashant-venkatesh-99018999/](https://www.linkedin.com/in/prashant-venkatesh-99018999/) |         
-| Nandan Gupta       |  [https://www.linkedin.com/in/nandan-gupta-698aa11b/](https://www.linkedin.com/in/prashant-venkatesh-99018999/) |      
-| Hare Krishna Rai   | [https://www.linkedin.com/in/harekrishnarai/](https://www.linkedin.com/in/harekrishnarai/) |
-| Henrik Plate       | [https://www.linkedin.com/in/henrikplate/](https://www.linkedin.com/in/henrikplate/) |
-| Gaurav Joshi       | [https://www.linkedin.com/in/gauravjoshii/](https://www.linkedin.com/in/gauravjoshii/) |
-
-
 ## POC :
 
 |  Demo Videos |
@@ -65,12 +56,21 @@ Our aim is to provide you with a better understanding of vulnerable packages and
 | [Demo 3](https://youtu.be/BljNgBZxbgo) |       
 
 
-## Want to contribute?
-
-Awesome! The most basic way to show your support is to star the project or raise issues.
-
+## Want to contribute? 
 [![Fork this project](https://img.shields.io/github/forks/harekrishnarai/Damn-vulnerable-sca.svg?style=social)](https://github.com/harekrishnarai/Damn-vulnerable-sca/fork)
 [![Start contributing](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/harekrishnarai/Damn-vulnerable-sca/issues)
+<br>Awesome! The most basic way to show your support is to star the project or raise issues.
 
+## Contributors
+Thanks to all the people who already contributed!
+[Prashant Venkatesh](https://www.linkedin.com/in/prashant-venkatesh-99018999/)    
+[Nandan Gupta](https://www.linkedin.com/in/prashant-venkatesh-99018999/)  
+[Hare Krishna Rai](https://www.linkedin.com/in/harekrishnarai/)  
+[Henrik Plate](https://www.linkedin.com/in/henrikplate/)  
+[Gaurav Joshi](https://www.linkedin.com/in/gauravjoshii/)  
+
+<a href="https://github.com/harekrishnarai/Damn-vulnerable-sca/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=harekrishnarai/Damn-vulnerable-sca" />
+</a>
 
 
