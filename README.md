@@ -45,9 +45,7 @@ Step 4. Visit http://localhost:8000/ to access the application
 
 Our aim is to provide you with a better understanding of vulnerable packages and JAR dependencies so that you can gain hands-on experience. We will keep you updated with the latest CVEs. Stay tuned! 
 
-<br>
-
-## POC :
+## After running the application :
 
 |  Demo Videos |
 |---------------|
