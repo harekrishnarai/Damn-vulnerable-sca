@@ -8,7 +8,7 @@
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>2.1.13.RELEASE</version>
-		<relativePath />
+		<relativePath/>
 	</parent>
 
 	<groupId>com.acme.foo</groupId>
@@ -17,7 +17,7 @@
 	<packaging>jar</packaging>
 
 	<name>REST API</name>
-	<description></description>
+	<description/>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -40,7 +40,7 @@
 		<dependency>
 			<groupId>com.unboundid</groupId>
 			<artifactId>unboundid-ldapsdk</artifactId>
-			<version>3.1.1</version>
+			<version>3.2.1</version>
 		</dependency>
 		
 		<!-- CVE-2020-9547 -->
