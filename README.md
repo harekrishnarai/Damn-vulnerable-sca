@@ -44,7 +44,7 @@ Step 4. Visit http://localhost:3000/ to access the nodejs application and http:/
 
 Our aim is to provide you with a better understanding of vulnerable packages and JAR dependencies so that you can gain hands-on experience. We will keep you updated with the latest CVEs. Stay tuned! 
 
-## After running the application :
+## Tutorials to exploit the vulnerability:
 
 |  Demo Videos |
 |---------------|
