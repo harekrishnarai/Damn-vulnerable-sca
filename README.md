@@ -61,7 +61,7 @@ Our aim is to provide you with a better understanding of vulnerable packages and
 ## Contributors
 Thanks to all the people who already contributed!  
 [Prashant Venkatesh](https://www.linkedin.com/in/prashant-venkatesh-99018999/)    
-[Nandan Gupta](https://www.linkedin.com/in/prashant-venkatesh-99018999/)  
+[Nandan Gupta](https://www.linkedin.com/in/nandan-gupta-698aa11b)  
 [Hare Krishna Rai](https://www.linkedin.com/in/harekrishnarai/)  
 [Henrik Plate](https://www.linkedin.com/in/henrikplate/)  
 [Gaurav Joshi](https://www.linkedin.com/in/gauravjoshii/)  
