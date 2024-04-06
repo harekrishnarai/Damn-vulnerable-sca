@@ -46,11 +46,11 @@ Our aim is to provide you with a better understanding of vulnerable packages and
 
 ## Tutorials to exploit the vulnerability:
 
-|  Demo Videos |
-|---------------|
-| [Demo 1](https://www.youtube.com/watch?v=MXAuqGiB354) |               
-| [Demo 2](https://youtu.be/HgLKVtKh87w) |          
-| [Demo 3](https://youtu.be/BljNgBZxbgo) |       
+|  Demo Videos | CVE Exploited |
+|---------------|-----------|
+| [Demo 1](https://www.youtube.com/watch?v=MXAuqGiB354) |    CVE-2023-42282 |           
+| [Demo 2](https://youtu.be/HgLKVtKh87w) |     CVE-2017-16114 |     
+| [Demo 3](https://youtu.be/BljNgBZxbgo) |     CVE-2021-44228 |  
 
 
 ## Want to contribute? 
