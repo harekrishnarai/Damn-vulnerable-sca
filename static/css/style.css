@@ -1,9 +1,34 @@
 @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css'); 
 
+
+.navbar {
+  position: sticky;
+  top: 0;
+  display: flex;
+  justify-content: flex-end; /* Align items to the right */
+  align-items: center;
+  background-color:#010e1f;
+  border: 2px solid #010e1f;
+  padding: 10px;
+}
+
+.navbar a {
+  margin-right: 20px;
+  color: #ffffff; /* Adjust color as needed */
+  text-decoration: none;
+  padding: 10px 20px; /* Add padding to create space around the text */
+}
+
+.navbar a:hover {
+  opacity: 0.7;
+  background-color: #333; /* Add a background color to create a square hover effect */
+  border-radius: 10px; /* Add rounded corners */
+}
+
 #particles-js {
-    position: fixed;
+    position: absolute;
     width: 100%;
-    height: 100%;
+    height: 100vh;
     background-color: #010e1f;
     background-size: cover;
     background-position: 50% 50%;
