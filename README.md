@@ -39,6 +39,10 @@ docker compose up
 ```
 Step 4. Visit http://localhost:3000/ to access the nodejs application and http://localhost:8080 for Springboot for log4j
 
+### SCA Goat HomePage
+![SCAGoat_HomePage](https://github.com/harekrishnarai/Damn-vulnerable-sca/assets/63994966/ffab6935-b44d-4925-a435-47d4a731702b)
+
+
 
 ## What's Coming?
 
