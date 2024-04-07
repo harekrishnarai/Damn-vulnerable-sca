@@ -52,6 +52,9 @@ Our aim is to provide you with a better understanding of vulnerable packages and
 | [Demo 2](https://youtu.be/HgLKVtKh87w) |     CVE-2017-16114 |     
 | [Demo 3](https://youtu.be/BljNgBZxbgo) |     CVE-2021-44228 |  
 
+## SCA Scan Reports
+- [Link to SCAGoat Scan Reports](https://docs.google.com/document/d/1hJxweaRQsC3XH7t36UwOGBPbyZWX1ZjLtmOoJAI0nIc/edit?usp=sharing)
+
 
 ## Want to contribute? 
 [![Fork this project](https://img.shields.io/github/forks/harekrishnarai/Damn-vulnerable-sca.svg?style=social)](https://github.com/harekrishnarai/Damn-vulnerable-sca/fork)
