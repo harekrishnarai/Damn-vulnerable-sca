@@ -58,7 +58,7 @@ Our aim is to provide you with a better understanding of vulnerable packages and
 
 ## SCA Scan Reports
 - [Link to SCAGoat Scan Reports](https://docs.google.com/document/d/1hJxweaRQsC3XH7t36UwOGBPbyZWX1ZjLtmOoJAI0nIc/edit?usp=sharing)
-
+- [Detailed Dependency Check Tool Report](https://drive.google.com/file/d/1u3pfSI2_t3MOXDtwAiJXOM4Ekdxd5v8H/view?usp=sharing)
 
 ## Want to contribute? 
 [![Fork this project](https://img.shields.io/github/forks/harekrishnarai/Damn-vulnerable-sca.svg?style=social)](https://github.com/harekrishnarai/Damn-vulnerable-sca/fork)
