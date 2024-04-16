@@ -18,10 +18,11 @@ The CVEs covered under SCAGoat are primarily critical and high severity, which h
 
 | CVE           | Package Name | Link  | 
 |---------------|--------------|-------|
-| CVE-2023-42282 | IP           | [https://security.snyk.io/vuln/SNYK-JS-IP-6240864](https://security.snyk.io/vuln/SNYK-JS-IP-6240864) |     
-| CVE-2017-1000427 | Marked     | [https://security.snyk.io/vuln/npm:marked:20170112](https://security.snyk.io/vuln/npm:marked:20170112) |     
+| CVE-2023-42282 | IP           | [https://nvd.nist.gov/vuln/detail/CVE-2023-42282](https://nvd.nist.gov/vuln/detail/CVE-2023-42282) |     
+| CVE-2017-1000427 | Marked     | [https://nvd.nist.gov/vuln/detail/CVE-2017-1000427](https://nvd.nist.gov/vuln/detail/CVE-2017-1000427) |     
 | CVE-2017-16114 | Marked       | [https://github.com/markedjs/marked/issues/926](https://github.com/markedjs/marked/issues/926) |
 | CVE-2021-44228 | log4j        | [https://nvd.nist.gov/vuln/detail/CVE-2021-44228](https://nvd.nist.gov/vuln/detail/CVE-2021-44228)|
+| CVE-2020-9547 | Jackson-Binding | [https://nvd.nist.gov/vuln/detail/CVE-2020-9547](https://nvd.nist.gov/vuln/detail/CVE-2020-9547)|
 
 
 ## Steps to run SCAGoat
@@ -54,7 +55,8 @@ Our aim is to provide you with a better understanding of vulnerable packages and
 |---------------|-----------|
 | [Demo 1](https://www.youtube.com/watch?v=MXAuqGiB354) |    CVE-2023-42282 |           
 | [Demo 2](https://youtu.be/HgLKVtKh87w) |     CVE-2017-16114 |     
-| [Demo 3](https://youtu.be/BljNgBZxbgo) |     CVE-2021-44228 |  
+| [Demo 3](https://youtu.be/BljNgBZxbgo) |     CVE-2021-44228 |
+| [Demo 4](https://youtu.be/BGGu9jAJQ1I) | CVE-2020-9547 |
 
 ## SCA Scan Reports
 - [Link to SCAGoat Scan Reports](https://docs.google.com/document/d/1hJxweaRQsC3XH7t36UwOGBPbyZWX1ZjLtmOoJAI0nIc/edit?usp=sharing)
