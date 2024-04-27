@@ -23,6 +23,7 @@ The CVEs covered under SCAGoat are primarily critical and high severity, which h
 | CVE-2017-16114 | Marked       | [https://github.com/markedjs/marked/issues/926](https://github.com/markedjs/marked/issues/926) |
 | CVE-2021-44228 | log4j        | [https://nvd.nist.gov/vuln/detail/CVE-2021-44228](https://nvd.nist.gov/vuln/detail/CVE-2021-44228)|
 | CVE-2020-9547 | Jackson-Binding | [https://nvd.nist.gov/vuln/detail/CVE-2020-9547](https://nvd.nist.gov/vuln/detail/CVE-2020-9547)|
+|CVE-2021-33623 | trim-newlines | [https://nvd.nist.gov/vuln/detail/CVE-2021-33623](https://nvd.nist.gov/vuln/detail/CVE-2021-33623)|
 
 
 ## Steps to run SCAGoat
