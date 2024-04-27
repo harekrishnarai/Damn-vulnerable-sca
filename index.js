@@ -12,7 +12,6 @@ import('trim-newlines').then((module) => {
 });
 
 const app = express();
-
 app.use(express.urlencoded({ limit: '10mb', extended: true }));
 app.use(express.json({ limit: '10mb' }));
 app.use('/static', express.static(path.join(__dirname, 'static')));
@@ -35,35 +34,47 @@ app.get('/markdown', function (req, res) {
 
 app.get('/trimnewlines', function (req, res) {
   res.send(`
-    <!DOCTYPE html>
-    <html>
-    <head>
-      <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css" rel="stylesheet">
-    </head>
-    <body class="p-10">
-      <form action="/trimnewlines" method="post" class="space-y-4">
-        <div>
-          <label for="payload" class="block text-sm font-medium text-gray-700">Payload</label>
-          <div class="mt-1">
-            <input type="text" id="payload" name="payload" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md">
-          </div>
-        </div>
-        <div>
-          <button type="submit" class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-            Submit
-          </button>
-        </div>
-      </form>
-    </body>
-    </html>
+   <!DOCTYPE html>
+<html>
+<head>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css" rel="stylesheet">
+  <style>
+    textarea {
+      overflow: hidden;
+    }
+  </style>
+</head>
+<body class="p-10">
+  <form action="/trimnewlines" method="post" class="space-y-4">
+    <div>
+      <label for="payload" class="block text-sm font-medium text-gray-700">Payload</label>
+      <div class="mt-1">
+        <textarea id="payload" name="payload" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md bg-gray-200" oninput="this.style.height = '';this.style.height = this.scrollHeight + 'px'"></textarea> </div>
+    <div>
+      <button type="submit" class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+        Submit
+      </button>
+    </div>
+  </form>
+
+  <script>
+    window.addEventListener('DOMContentLoaded', (event) => {
+      document.getElementById('payload').style.height = 'auto';
+      document.getElementById('payload').style.height = (document.getElementById('payload').scrollHeight) + 'px';
+    });
+  </script>
+</body>
+</html>
   `);
 });
 
 app.post('/trimnewlines', function (req, res) {
     const payload = req.body.payload;
-    const string = String(Array.from({length: 30000}).fill(payload).join('')) + 'a';
+    const maxLength = 1e7;
+    const string = String(Array.from({length: Math.min(maxLength, 150)}).fill(payload).join('')) + 'a';
     const start = Date.now();
-    trimNewlines.end(string);
+    const trimmedString = trimNewlines.end(string);
+    console.log(`TrimmedString: ${trimmedString}`);
     const difference = Date.now() - start;
     console.log(`Execution time difference: ${difference}`);
     
@@ -72,21 +83,39 @@ app.post('/trimnewlines', function (req, res) {
         console.log("\nExponential execution time -> VULNERABLE\n");
         responseMessage = `\nExponential execution time -> VULNERABLE. Execution time: ${difference}\n`;
     } else {
-        responseMessage = `Execution time difference: ${difference}`;
+        responseMessage = `\nExecution time: ${difference}\n`;
     }
     
     res.send(`
-        <html>
-            <head>
-            <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-            </head>
-            <body class="flex items-center justify-center h-screen bg-gray-200">
-                <div class="text-center p-8 bg-white rounded shadow-md">
-                    <h1 class="text-2xl font-bold mb-4">Execution Time</h1>
-                    <p>${responseMessage}</p>
-                </div>
-            </body>
-        </html>
+    <html>
+    <head>
+        <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+        <style>
+            #trimmedString {
+                display: none;
+            }
+            #readMore:target #trimmedString {
+                display: block;
+            }
+            #readMore:target #readMoreLink {
+                display: none;
+            }
+        </style>
+    </head>
+    <body class="flex items-center justify-center h-screen bg-gray-200">
+        <div class="text-center p-8 bg-white rounded shadow-md">
+            <h1 class="text-2xl font-bold mb-4">Execution Time</h1>
+            <p>${responseMessage}</p>
+            <div id="readMore">
+                <a id="readMoreLink" href="#readMore">👉Click here to see the Final String👈</a>
+                <p id="trimmedString">${trimmedString}<br><br><a href="#">👉Click here to hide the Final String👈</a></p>
+            </div>
+            <button onclick="location.href='/trimnewlines'" class="mt-4 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                Try Another
+            </button>
+        </div>
+    </body>
+</html>
     `);
 });
 
