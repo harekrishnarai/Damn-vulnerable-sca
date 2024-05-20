@@ -1,5 +1,7 @@
 node_modules/
+target/
 .env
 npm-debug.log
 yarn-error.log
 test.md
+.idea
