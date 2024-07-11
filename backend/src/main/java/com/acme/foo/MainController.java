@@ -8,6 +8,9 @@ import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.socket.config.annotation.EnableWebSocket;
+import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
+import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -16,7 +19,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @EnableAutoConfiguration
 @SpringBootApplication
 @EnableCaching
-public class MainController extends SpringBootServletInitializer {
+@EnableWebSocket
+public class MainController extends SpringBootServletInitializer implements WebSocketConfigurer {
+
+    @Override
+    public void registerWebSocketHandlers(WebSocketHandlerRegistry webSocketHandlerRegistry) {
+        webSocketHandlerRegistry.addHandler(new ChatMessageHandler(), "/chat-websocket").setAllowedOrigins("*");
+    }
 
 	public static void main(String[] args) {
 		SpringApplication.run(MainController.class, args);

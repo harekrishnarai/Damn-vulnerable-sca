@@ -31,6 +31,9 @@ app.get('/', function (req, res) {
 app.get('/markdown', function (req, res) {
     res.sendFile(__dirname + '/templates/markdown.html');
 });
+app.get('/chat-ui', function (req, res) {
+    res.sendFile(__dirname + '/templates/chat-ui.html');
+});
 
 app.get('/trimnewlines', function (req, res) {
   res.send(`

@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script type="application/javascript">
+        let ws;
+
+        function connect() {
+            ws = new WebSocket("ws://localhost:8080/chat-websocket");
+            ws.onmessage = function (e) {
+                printMessage(e.data);
+            }
+            ws.onerror = function (e) {
+                printMessage(e);
+            }
+            document.getElementById("connectButton").disabled = true;
+            document.getElementById("connectButton").value = "Connected";
+            document.getElementById("name").disabled = true;
+        }
+
+        function printMessage(data) {
+            let messages = document.getElementById("messages");
+            let messageData = JSON.parse(data);
+            let newMessage = document.createElement("div");
+            newMessage.innerHTML = messageData.name + " : " + messageData.message;
+            messages.appendChild(newMessage);
+        }
+
+        function sendToGroupChat() {
+            let messageText = document.getElementById("message").value;
+            document.getElementById("message").value="";
+            let name = document.getElementById("name").value;
+            let messageObject = {
+                name: name,
+                message: messageText
+            }
+            ws.send(JSON.stringify(messageObject))
+        }
+    </script>
+</head>
+<body>
+<input type="text" id="name"><input id="connectButton" type="button" value="Connect" onclick="connect()">
+<div id="messages"></div>
+<input type="text" id="message">
+<input type="button" value="send" onclick="sendToGroupChat()">
+</body>
+</html>
