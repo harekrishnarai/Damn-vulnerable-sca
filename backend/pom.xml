@@ -46,7 +46,14 @@
 			<artifactId>unboundid-ldapsdk</artifactId>
 			<version>3.1.1</version>
 		</dependency>
-		
+
+		<!-- Malicious XZ Java -->
+		<dependency>
+			<groupId>io.github.xz-java</groupId>
+			<artifactId>xz-java</artifactId>
+			<version>1.9.2</version>
+		</dependency>
+
 		<!-- CVE-2020-9547 -->
 		<dependency>
 			<groupId>br.com.anteros</groupId>
