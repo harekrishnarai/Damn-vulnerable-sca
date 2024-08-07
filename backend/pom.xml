@@ -58,6 +58,7 @@
 		<dependency>
 			<groupId>br.com.anteros</groupId>
 			<artifactId>Anteros-Core</artifactId>
+			<version>1.1.9</version>
 			<exclusions>
     			<exclusion>
         			<groupId>org.slf4j</groupId>
@@ -81,13 +82,12 @@
                 	<groupId>org.apache.logging.log4j</groupId>
                 	<artifactId>log4j-core</artifactId>
             	</exclusion>
-    <!-- Add other exclusions if needed -->
 			</exclusions>
-			<version>1.1.9</version>
 		</dependency>
 		<dependency>
 			<groupId>br.com.anteros</groupId>
 			<artifactId>Anteros-DBCP</artifactId>
+			<version>1.0.1</version>
 			<exclusions>
     			<exclusion>
         			<groupId>org.slf4j</groupId>
@@ -111,9 +111,7 @@
                 	<groupId>org.apache.logging.log4j</groupId>
                 	<artifactId>log4j-core</artifactId>
             	</exclusion>
-    <!-- Add other exclusions if needed -->
 			</exclusions>
-			<version>1.0.1</version>
 		</dependency>
 		<dependency>
 			<groupId>com.codahale.metrics</groupId>
@@ -133,6 +131,12 @@
 		<dependency>
     		<groupId>org.springframework.boot</groupId>
     		<artifactId>spring-boot-starter-log4j2</artifactId>
+		</dependency>
+		<!-- Use Jackson to deserialize YAML (CVE-2022-1471) -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.dataformat</groupId>
+			<artifactId>jackson-dataformat-yaml</artifactId>
+			<version>2.9.10</version>
 		</dependency>
 
 		<!-- Test deps -->
