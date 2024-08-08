@@ -78,7 +78,8 @@ Thanks to all the people who already contributed!
 [Nandan Gupta](https://www.linkedin.com/in/nandan-gupta-698aa11b)  
 [Hare Krishna Rai](https://www.linkedin.com/in/harekrishnarai/)  
 [Henrik Plate](https://www.linkedin.com/in/henrikplate/)  
-[Gaurav Joshi](https://www.linkedin.com/in/gauravjoshii/)  
+[Gaurav Joshi](https://www.linkedin.com/in/gauravjoshii/)
+[Yoad Fekete](https://www.linkedin.com/in/yoadfekete)
 
 <a href="https://github.com/harekrishnarai/Damn-vulnerable-sca/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=harekrishnarai/Damn-vulnerable-sca" />
