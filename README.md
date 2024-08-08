@@ -62,6 +62,7 @@ Our aim is to provide you with a better understanding of vulnerable packages and
 | [Demo 2](https://youtu.be/HgLKVtKh87w) |     CVE-2017-16114 |     
 | [Demo 3](https://youtu.be/BljNgBZxbgo) |     CVE-2021-44228 |
 | [Demo 4](https://youtu.be/BGGu9jAJQ1I) | CVE-2020-9547 |
+| [Demo 5](https://youtu.be/sWAzUP_uC7k) | XZ-JAVA compromised |
 
 ## SCA Scan Reports
 - [Link to SCAGoat Scan Reports](https://docs.google.com/document/d/1hJxweaRQsC3XH7t36UwOGBPbyZWX1ZjLtmOoJAI0nIc/edit?usp=sharing)
