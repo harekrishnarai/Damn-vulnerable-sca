@@ -148,18 +148,6 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-
-		<dependency>
-			<groupId>org.apache.tomcat</groupId>
-			<artifactId>tomcat-coyote</artifactId>
-			<version>9.0.31</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.tomcat</groupId>
-			<artifactId>tomcat</artifactId>
-			<version>9.0.31</version>
-			<type>zip</type>
-		</dependency>
 	</dependencies>
 
 	<build>
