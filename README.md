@@ -9,7 +9,9 @@
 
 SCAGoat is an application for Software Composition Analysis (SCA) that focuses on vulnerable and compromised JAR dependencies used in development code, providing users with hands-on learning opportunities to understand potential attack scenarios. It is designed to identify vulnerabilities that may arise from using vulnerable JAR files.
 
-
+## Presented at:
+- [DC32: Demo Labs](https://forum.defcon.org/node/249617)
+- [Appsec Village: Arsenal](https://www.appsecvillage.com/events/dc-2024/arsenal-scagoat-661284)
 
 ## What All CVE Covered?
 
