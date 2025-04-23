@@ -16,6 +16,8 @@ This project contains deliberately vulnerable and malicious code for educational
 ## Presented at:
 - [DC32: Demo Labs](https://forum.defcon.org/node/249617)
 - [Appsec Village: Arsenal](https://www.appsecvillage.com/events/dc-2024/arsenal-scagoat-661284)
+- [Blackhat Europe 2024](https://www.blackhat.com/eu-24/arsenal/schedule/index.html#scagoat---exploiting-damn-vulnerable-sca-application-42139)
+- [Blackhat Asia 2025](https://www.blackhat.com/asia-25/arsenal/schedule/index.html#scagoat---exploiting-damn-vulnerable-and-compromised-sca-application-43960)
 
 ## What All CVE Covered?
 
