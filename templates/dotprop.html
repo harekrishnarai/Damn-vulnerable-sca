@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dot-Prop Vulnerability - SCAGoat</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="../static/css/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        /* Navbar dropdown styles */
+        .nav-dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: rgba(17, 24, 39, 0.95);
+            min-width: 200px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.5);
+            z-index: 1000;
+            border-radius: 5px;
+            padding: 8px 0;
+        }
+        .nav-dropdown:hover .dropdown-content {
+            display: block;
+        }
+        .dropdown-content a {
+            padding: 8px 16px;
+            text-decoration: none;
+            display: block;
+            transition: background-color 0.3s;
+        }
+        .dropdown-content a:hover {
+            background-color: rgba(55, 65, 81, 0.8);
+        }
+        .dropdown-content .nav-divider {
+            height: 1px;
+            margin: 4px 0;
+            background-color: rgba(75, 85, 99, 0.5);
+        }
+        .dropdown-title {
+            padding: 10px 15px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div id="particles-js"></div>
+
+    <nav class="navbar">
+        <a href="/"><i class="fas fa-home"></i> Home</a>
+        
+        <!-- Frontend Vulnerabilities Dropdown -->
+        <div class="nav-dropdown">
+            <div class="dropdown-title">
+                <i class="fas fa-code"></i> Frontend
+                <i class="fas fa-caret-down ml-1"></i>
+            </div>
+            <div class="dropdown-content">
+                <a href="/markdown"><i class="fas fa-file-alt fa-fw"></i> Markdown (CVE-2017-16114)</a>
+                <a href="/pug"><i class="fas fa-file-code fa-fw"></i> Pug (CVE-2019-8331)</a>
+                <a href="/lodash"><i class="fas fa-code fa-fw"></i> Lodash (CVE-2019-10744)</a>
+                <a href="/dotprop" class="active"><i class="fas fa-dot-circle fa-fw"></i> Dot-Prop (CVE-2020-8116)</a>
+            </div>
+        </div>
+        
+        <!-- Node.js Vulnerabilities Dropdown -->
+        <div class="nav-dropdown">
+            <div class="dropdown-title">
+                <i class="fab fa-node-js"></i> Node.js
+                <i class="fas fa-caret-down ml-1"></i>
+            </div>
+            <div class="dropdown-content">
+                <a href="/trimnewlines"><i class="fas fa-cut fa-fw"></i> Trim-Newlines (CVE-2021-33623)</a>
+                
+                <a href="/checkip"><i class="fas fa-search fa-fw"></i> Checkip (SSRF)</a>
+            </div>
+        </div>
+        
+        <!-- Realtime Communications -->
+        <div class="nav-dropdown">
+            <div class="dropdown-title">
+                <i class="fas fa-exchange-alt"></i> Realtime
+                <i class="fas fa-caret-down ml-1"></i>
+            </div>
+            <div class="dropdown-content">
+                <a href="/chat-ui"><i class="fas fa-comment fa-fw"></i> WebSocket (CVE-2020-13935)</a>
+            </div>
+        </div>
+        
+        <!-- Java Backend Vulnerabilities -->
+        <div class="nav-dropdown">
+            <div class="dropdown-title">
+                <i class="fab fa-java"></i> Backend
+                <i class="fas fa-caret-down ml-1"></i>
+            </div>
+            <div class="dropdown-content">
+                <a href="http://localhost:8080" target="_blank"><i class="fas fa-server fa-fw"></i> Jackson-Databind (CVE-2020-9547)</a>
+                <a href="http://localhost:8080/api/files/upload" target="_blank"><i class="fas fa-file-upload fa-fw"></i> XZ-Java (Malicious)</a>
+                <a href="http://localhost:8080/log4j" target="_blank"><i class="fas fa-bug fa-fw"></i> Log4j (CVE-2021-44228)</a>
+            </div>
+        </div>
+        
+        <!-- Direct link to backend for convenience -->
+        <a href="http://localhost:8080" target="_blank"><i class="fas fa-external-link-alt"></i> Backend</a>
+    </nav>
+
+    <div class="container mx-auto px-4 py-8">
+        <div class="vuln-detail-card">
+            <h1 class="text-3xl font-bold mb-4">Dot-Prop Prototype Pollution Vulnerability</h1>
+            <div class="mb-6">
+                <span class="vuln-badge">CVE-2020-8116</span>
+                <span class="vuln-badge">CVSS 6.5</span>
+                <span class="vuln-badge">Prototype Pollution</span>
+            </div>
+
+            <div class="description-section">
+                <h2 class="text-2xl font-semibold mb-3">Description</h2>
+                <p class="mb-4">
+                    The dot-prop package before version 5.2.0 is vulnerable to prototype pollution. 
+                    This vulnerability occurs when using the set() function with attacker-controlled inputs,
+                    allowing an attacker to manipulate JavaScript object prototypes, which can lead to 
+                    denial of service, security bypass, or even remote code execution.
+                </p>
+                <p class="mb-4">
+                    Dot-prop is a popular npm package that allows getting, setting, or deleting nested properties
+                    of objects using a dot path notation.
+                </p>
+            </div>
+
+            <div class="demo-section">
+                <h2 class="text-2xl font-semibold mb-3">Demonstration</h2>
+                <p class="mb-4">Test the dot-prop vulnerability by setting properties on an object using a path that could lead to prototype pollution:</p>
+                
+                <div class="input-container">
+                    <label for="object-path" class="block text-white mb-2">Property Path:</label>
+                    <input type="text" id="object-path" class="w-full p-2 mb-4 bg-gray-700 text-white rounded" 
+                        placeholder="Enter property path (e.g., user.name)" value="user.name">
+                    
+                    <label for="property-value" class="block text-white mb-2">Property Value:</label>
+                    <input type="text" id="property-value" class="w-full p-2 mb-4 bg-gray-700 text-white rounded" 
+                        placeholder="Enter property value" value="John">
+                    
+                    <button id="set-property" class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+                        Set Property
+                    </button>
+                </div>
+                
+                <div id="result-container" class="mt-4 p-4 bg-gray-800 rounded hidden">
+                    <h3 class="text-xl font-semibold mb-2">Result:</h3>
+                    <pre id="result" class="whitespace-pre-wrap"></pre>
+                </div>
+                
+                <div class="mt-6">
+                    <h3 class="text-xl font-semibold mb-2">Payload Example:</h3>
+                    <pre class="bg-gray-800 p-4 rounded overflow-x-auto">
+// Prototype pollution payload:
+Property Path: __proto__.polluted
+Property Value: Yes, I am polluted!
+
+// Or nested approach:
+Property Path: constructor.prototype.polluted
+Property Value: Polluted via constructor
+
+// After pollution, check:
+console.log({}.polluted); // Will show the polluted value</pre>
+                </div>
+            </div>
+
+            <div class="mitigation-section">
+                <h2 class="text-2xl font-semibold mb-3">Mitigation</h2>
+                <p class="mb-4">To mitigate this vulnerability:</p>
+                <ul class="list-disc list-inside mb-4">
+                    <li>Update dot-prop to version 5.2.0 or higher</li>
+                    <li>Validate user input before using it as a path in dot-prop functions</li>
+                    <li>Avoid using user-controlled input as property paths</li>
+                </ul>
+                <pre class="bg-gray-800 p-4 rounded overflow-x-auto">
+// Update command:
+npm update dot-prop --save
+
+// Or pin to a specific safe version:
+npm install dot-prop@5.2.0 --save</pre>
+            </div>
+
+            <div class="references-section">
+                <h2 class="text-2xl font-semibold mb-3">References</h2>
+                <ul class="list-disc list-inside">
+                    <li><a href="https://github.com/advisories/GHSA-ff7x-qrg7-qggm" class="text-blue-400 hover:underline" target="_blank">GitHub Advisory GHSA-ff7x-qrg7-qggm</a></li>
+                    <li><a href="https://nvd.nist.gov/vuln/detail/CVE-2020-8116" class="text-blue-400 hover:underline" target="_blank">CVE-2020-8116</a></li>
+                    <li><a href="https://github.com/sindresorhus/dot-prop/issues/47" class="text-blue-400 hover:underline" target="_blank">Dot-prop Issue #47</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <script>
+        // Initialize particles.js
+        particlesJS('particles-js', {
+            particles: {
+                number: { value: 80, density: { enable: true, value_area: 800 } },
+                color: { value: '#ffffff' },
+                shape: { type: 'circle' },
+                opacity: { value: 0.5, random: false },
+                size: { value: 3, random: true },
+                line_linked: { enable: true, distance: 150, color: '#ffffff', opacity: 0.4, width: 1 },
+                move: { enable: true, speed: 6, random: false, straight: false, bounce: false }
+            },
+            interactivity: {
+                detect_on: 'canvas',
+                events: { onhover: { enable: true, mode: 'repulse' }, onclick: { enable: true, mode: 'push' } }
+            }
+        });
+
+        // Dot-prop vulnerability demonstration
+        document.addEventListener('DOMContentLoaded', function() {
+            const setPropertyBtn = document.getElementById('set-property');
+            const objectPathInput = document.getElementById('object-path');
+            const propertyValueInput = document.getElementById('property-value');
+            const resultContainer = document.getElementById('result-container');
+            const resultDisplay = document.getElementById('result');
+            
+            setPropertyBtn.addEventListener('click', async function() {
+                const path = objectPathInput.value;
+                const value = propertyValueInput.value;
+                
+                try {
+                    const response = await fetch('/api/dotprop', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ path, value })
+                    });
+                    
+                    const data = await response.json();
+                    
+                    resultContainer.classList.remove('hidden');
+                    
+                    // Display the result
+                    let resultText = `Set property: ${path} = ${value}\n\n`;
+                    resultText += `Original object: ${JSON.stringify(data.originalObject, null, 2)}\n\n`;
+                    resultText += `Modified object: ${JSON.stringify(data.modifiedObject, null, 2)}\n\n`;
+                    
+                    // Check for prototype pollution
+                    if (path.includes('__proto__') || path.includes('constructor.prototype')) {
+                        resultText += `Checking for pollution...\n`;
+                        resultText += `Empty object pollution check: ${JSON.stringify({})}\n`;
+                        resultText += `If you see your value in an empty object, prototype pollution occurred!`;
+                    }
+                    
+                    resultDisplay.textContent = resultText;
+                } catch (error) {
+                    resultContainer.classList.remove('hidden');
+                    resultDisplay.textContent = `Error: ${error.message}`;
+                }
+            });
+        });
+    </script>
+</body>
+</html>

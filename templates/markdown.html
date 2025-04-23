@@ -5,27 +5,305 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Markdown Resume Builder</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="../static/css/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        /* Navbar dropdown styles */
+        .nav-dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: rgba(17, 24, 39, 0.95);
+            min-width: 200px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.5);
+            z-index: 1000;
+            border-radius: 5px;
+            padding: 8px 0;
+        }
+        .nav-dropdown:hover .dropdown-content {
+            display: block;
+        }
+        .dropdown-content a {
+            padding: 8px 16px;
+            text-decoration: none;
+            display: block;
+            transition: background-color 0.3s;
+        }
+        .dropdown-content a:hover {
+            background-color: rgba(55, 65, 81, 0.8);
+        }
+        .dropdown-content .nav-divider {
+            height: 1px;
+            margin: 4px 0;
+            background-color: rgba(75, 85, 99, 0.5);
+        }
+        .dropdown-title {
+            padding: 10px 15px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+    </style>
 </head>
-<body class="bg-gray-100">
+<body>
+    <!-- Particle.js Background -->
+    <div id="particles-js"></div>
+
+    <nav class="navbar">
+        <a href="/"><i class="fas fa-home"></i> Home</a>
+        
+        <!-- Frontend Vulnerabilities Dropdown -->
+        <div class="nav-dropdown">
+            <div class="dropdown-title">
+                <i class="fas fa-code"></i> Frontend
+                <i class="fas fa-caret-down ml-1"></i>
+            </div>
+            <div class="dropdown-content">
+                <a href="/markdown" class="active"><i class="fas fa-file-alt fa-fw"></i> Markdown (CVE-2017-16114)</a>
+                <a href="/pug"><i class="fas fa-file-code fa-fw"></i> Pug (CVE-2019-8331)</a>
+                <a href="/lodash"><i class="fas fa-code fa-fw"></i> Lodash (CVE-2019-10744)</a>
+                <a href="/dotprop"><i class="fas fa-dot-circle fa-fw"></i> Dot-Prop (CVE-2020-8116)</a>
+            </div>
+        </div>
+        
+        <!-- Node.js Vulnerabilities Dropdown -->
+        <div class="nav-dropdown">
+            <div class="dropdown-title">
+                <i class="fab fa-node-js"></i> Node.js
+                <i class="fas fa-caret-down ml-1"></i>
+            </div>
+            <div class="dropdown-content">
+                <a href="/trimnewlines"><i class="fas fa-cut fa-fw"></i> Trim-Newlines (CVE-2021-33623)</a>
+                
+                <a href="/checkip"><i class="fas fa-search fa-fw"></i> Checkip (SSRF)</a>
+            </div>
+        </div>
+        
+        <!-- Realtime Communications -->
+        <div class="nav-dropdown">
+            <div class="dropdown-title">
+                <i class="fas fa-exchange-alt"></i> Realtime
+                <i class="fas fa-caret-down ml-1"></i>
+            </div>
+            <div class="dropdown-content">
+                <a href="/chat-ui"><i class="fas fa-comment fa-fw"></i> WebSocket (CVE-2020-13935)</a>
+            </div>
+        </div>
+        
+        <!-- Java Backend Vulnerabilities -->
+        <div class="nav-dropdown">
+            <div class="dropdown-title">
+                <i class="fab fa-java"></i> Backend
+                <i class="fas fa-caret-down ml-1"></i>
+            </div>
+            <div class="dropdown-content">
+                <a href="http://localhost:8080" target="_blank"><i class="fas fa-server fa-fw"></i> Jackson-Databind (CVE-2020-9547)</a>
+                <a href="http://localhost:8080/api/files/upload" target="_blank"><i class="fas fa-file-upload fa-fw"></i> XZ-Java (Malicious)</a>
+                <a href="http://localhost:8080/log4j" target="_blank"><i class="fas fa-bug fa-fw"></i> Log4j (CVE-2021-44228)</a>
+            </div>
+        </div>
+        
+        <!-- Direct link to backend for convenience -->
+        <a href="http://localhost:8080" target="_blank"><i class="fas fa-external-link-alt"></i> Backend</a>
+    </nav>
+
     <div class="container mx-auto px-4 py-8">
-        <h1 class="text-3xl font-bold text-center mb-8">Make Your Resume in Markdown Format Here</h1>
-        <form action="/markdown" method="POST" class="max-w-lg mx-auto bg-white p-6 rounded-lg shadow-md">
-            <div class="mb-4">
-                <label for="fullName" class="block text-gray-700 text-sm font-bold mb-2">Full Name</label>
-                <input type="text" id="fullName" name="fullName" class="w-full px-3 py-2 rounded-md border border-gray-300 focus:outline-none focus:border-blue-500" placeholder="Enter your full name" required>
+        <h1 class="text-3xl font-bold text-white text-center mb-8">Markdown Resume Builder</h1>
+        
+        <div class="max-w-lg mx-auto bg-gray-800 bg-opacity-80 p-6 rounded-lg shadow-md">
+            <div class="mb-4 text-white">
+                <h2 class="text-xl font-bold mb-2"><i class="fas fa-exclamation-triangle text-yellow-500 mr-2"></i>Vulnerability Information</h2>
+                <p class="mb-2">This page demonstrates <span class="text-red-400 font-bold">CVE-2017-16114</span> - a Cross-Site Scripting (XSS) vulnerability in the Marked library version 0.3.5.</p>
+                <p>The vulnerability allows attackers to inject malicious JavaScript code through specially crafted markdown input.</p>
+                <p class="mt-2 text-sm">Example payload: <code class="bg-gray-900 px-2 py-1 rounded">![](javascript:alert('XSS'))</code></p>
             </div>
-            <div class="mb-4">
-                <label for="email" class="block text-gray-700 text-sm font-bold mb-2">Email</label>
-                <input type="email" id="email" name="email" class="w-full px-3 py-2 rounded-md border border-gray-300 focus:outline-none focus:border-blue-500" placeholder="Enter your email address" required>
-            </div>
-            <div class="mb-4">
-                <label for="markdownResume" class="block text-gray-700 text-sm font-bold mb-2">Your Markdown Resume</label>
-                <textarea id="markdownResume" name="markdownResume" rows="6" class="w-full px-3 py-2 rounded-md border border-gray-300 focus:outline-none focus:border-blue-500" placeholder="Enter your resume in Markdown format" required></textarea>
-            </div>
-            <div class="text-center">
-                <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600">Submit</button>
-            </div>
-        </form>
+
+            <form action="/markdown" method="POST" class="text-gray-800">
+                <div class="mb-4">
+                    <label for="fullName" class="block text-white text-sm font-bold mb-2">Full Name</label>
+                    <input type="text" id="fullName" name="fullName" class="w-full px-3 py-2 rounded-md border border-gray-600 bg-gray-700 text-white focus:outline-none focus:border-blue-500" placeholder="Enter your full name" required>
+                </div>
+                <div class="mb-4">
+                    <label for="email" class="block text-white text-sm font-bold mb-2">Email</label>
+                    <input type="email" id="email" name="email" class="w-full px-3 py-2 rounded-md border border-gray-600 bg-gray-700 text-white focus:outline-none focus:border-blue-500" placeholder="Enter your email address" required>
+                </div>
+                <div class="mb-4">
+                    <label for="markdownResume" class="block text-white text-sm font-bold mb-2">Your Markdown Resume</label>
+                    <div class="relative">
+                        <textarea id="markdownResume" name="markdownResume" rows="10" class="w-full px-3 py-2 rounded-md border border-gray-600 bg-gray-700 text-white focus:outline-none focus:border-blue-500" placeholder="Enter your resume in Markdown format" required></textarea>
+                        <button type="button" id="insertTemplate" class="absolute top-2 right-2 bg-blue-500 text-white text-xs px-2 py-1 rounded hover:bg-blue-600">Insert Template</button>
+                    </div>
+                    <div class="mt-1 text-sm text-gray-400">
+                        <details>
+                            <summary class="cursor-pointer hover:text-gray-300">Markdown Tips</summary>
+                            <div class="pl-4 mt-2">
+                                <p># Header 1</p>
+                                <p>## Header 2</p>
+                                <p>*italic* or _italic_</p>
+                                <p>**bold** or __bold__</p>
+                                <p>- List item</p>
+                                <p>[Link text](https://example.com)</p>
+                                <p>![Image alt text](image-url.jpg)</p>
+                            </div>
+                        </details>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="bg-blue-600 text-white px-6 py-3 rounded-md hover:bg-blue-700 focus:outline-none focus:bg-blue-700 transform transition hover:scale-105">
+                        <i class="fas fa-paper-plane mr-2"></i>Generate Resume
+                    </button>
+                </div>
+            </form>
+        </div>
     </div>
+
+    <!-- Particle.js Library -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script>
+        // Particle.js configuration - same as index page
+        particlesJS('particles-js', {
+            "particles": {
+                "number": {
+                    "value": 80,
+                    "density": {
+                        "enable": true,
+                        "value_area": 800
+                    }
+                },
+                "color": {
+                    "value": "#ffffff"
+                },
+                "shape": {
+                    "type": "circle",
+                    "stroke": {
+                        "width": 0,
+                        "color": "#000000"
+                    },
+                    "polygon": {
+                        "nb_sides": 5
+                    }
+                },
+                "opacity": {
+                    "value": 0.5,
+                    "random": false,
+                    "anim": {
+                        "enable": false,
+                        "speed": 1,
+                        "opacity_min": 0.1,
+                        "sync": false
+                    }
+                },
+                "size": {
+                    "value": 3,
+                    "random": true,
+                    "anim": {
+                        "enable": false,
+                        "speed": 40,
+                        "size_min": 0.1,
+                        "sync": false
+                    }
+                },
+                "line_linked": {
+                    "enable": true,
+                    "distance": 150,
+                    "color": "#ffffff",
+                    "opacity": 0.4,
+                    "width": 1
+                },
+                "move": {
+                    "enable": true,
+                    "speed": 6,
+                    "direction": "none",
+                    "random": false,
+                    "straight": false,
+                    "out_mode": "out",
+                    "bounce": false,
+                    "attract": {
+                        "enable": false,
+                        "rotateX": 600,
+                        "rotateY": 1200
+                    }
+                }
+            },
+            "interactivity": {
+                "detect_on": "canvas",
+                "events": {
+                    "onhover": {
+                        "enable": true,
+                        "mode": "grab"
+                    },
+                    "onclick": {
+                        "enable": true,
+                        "mode": "push"
+                    },
+                    "resize": true
+                },
+                "modes": {
+                    "grab": {
+                        "distance": 140,
+                        "line_linked": {
+                            "opacity": 1
+                        }
+                    },
+                    "bubble": {
+                        "distance": 400,
+                        "size": 40,
+                        "duration": 2,
+                        "opacity": 8,
+                        "speed": 3
+                    },
+                    "repulse": {
+                        "distance": 200,
+                        "duration": 0.4
+                    },
+                    "push": {
+                        "particles_nb": 4
+                    },
+                    "remove": {
+                        "particles_nb": 2
+                    }
+                }
+            },
+            "retina_detect": true
+        });
+
+        // Insert template button functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('insertTemplate').addEventListener('click', function() {
+                const template = `# John Doe
+## Senior Software Engineer
+
+Email: john.doe@example.com | Phone: (123) 456-7890 | LinkedIn: linkedin.com/in/johndoe
+
+### Summary
+Experienced software engineer with over 8 years of expertise in full-stack development.
+
+### Skills
+- **Languages**: JavaScript, TypeScript, Python, Java
+- **Frameworks**: React, Node.js, Express, Spring Boot
+- **Tools**: Git, Docker, Kubernetes, AWS
+
+### Experience
+#### Senior Software Engineer | Tech Company Inc.
+*January 2020 - Present*
+- Led development of microservices architecture
+- Implemented CI/CD pipelines using Jenkins and GitHub Actions
+- ![Profile Picture](https://example.com/profile.jpg)
+
+#### Software Engineer | Software Solutions LLC
+*June 2016 - December 2019*
+- Developed and maintained RESTful APIs
+- Collaborated with cross-functional teams on product development
+
+### Education
+**Bachelor of Science in Computer Science** | University of Technology | 2016`;
+                
+                document.getElementById('markdownResume').value = template;
+            });
+        });
+    </script>
 </body>
 </html>

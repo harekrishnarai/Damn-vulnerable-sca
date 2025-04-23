@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Handlebars Template Injection - SCAGoat</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="../static/css/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body>
+    <!-- Particle.js Background -->
+    <div id="particles-js"></div>
+
+    <nav class="navbar">
+        <a href="/"><i class="fas fa-home"></i> Home</a>
+        <a href="/markdown"><i class="fas fa-file-alt"></i> Markdown</a>
+        <a href="/handlebars"><i class="fas fa-code"></i> Handlebars</a>
+        <a href="/checkip"><i class="fas fa-search"></i> Checkip</a>
+        <a href="/trimnewlines"><i class="fas fa-cut"></i> Trim-Newlines</a>
+        <a href="/lodash"><i class="fas fa-code"></i> Lodash</a>
+        <a href="/chat-ui"><i class="fas fa-comment"></i> Chat</a>
+        <a href="http://localhost:8080" target="_blank"><i class="fas fa-server"></i> Backend</a>
+    </nav>
+
+    <div class="container mx-auto px-4 py-8">
+        <h1 class="text-3xl font-bold text-white text-center mb-8">Handlebars Template Injection Vulnerability</h1>
+        
+        <div class="max-w-3xl mx-auto bg-gray-800 bg-opacity-80 p-6 rounded-lg shadow-md mb-8">
+            <div class="mb-6 text-white">
+                <h2 class="text-xl font-bold mb-2"><i class="fas fa-exclamation-triangle text-yellow-500 mr-2"></i>CVE-2019-20920</h2>
+                <p class="mb-4">This demonstrates a critical Server-Side Template Injection (SSTI) vulnerability in Handlebars versions prior to 4.6.0.</p>
+                <p class="mb-4">The vulnerability allows attackers to execute arbitrary JavaScript code by injecting malicious template expressions that can bypass the built-in security mechanisms.</p>
+                <div class="bg-red-900 bg-opacity-70 p-3 rounded mt-4">
+                    <p class="text-sm"><strong>CVSS Score:</strong> 9.8 (Critical)</p>
+                    <p class="text-sm"><strong>Vulnerability Type:</strong> Server-Side Template Injection (SSTI)</p>
+                    <p class="text-sm"><strong>Fixed Version:</strong> 4.6.0</p>
+                    <p class="text-sm"><strong>Current Version:</strong> 4.0.14</p>
+                </div>
+            </div>
+
+            <div class="bg-gray-900 bg-opacity-70 p-4 rounded-lg mb-6">
+                <h3 class="text-lg font-bold text-white mb-3">Demonstration</h3>
+                <p class="text-gray-300 mb-4">Enter a user profile that will be rendered using the vulnerable Handlebars template engine:</p>
+                
+                <form id="templateForm" class="space-y-4">
+                    <div>
+                        <label for="name" class="block text-white text-sm font-bold mb-2">Name:</label>
+                        <input type="text" id="name" class="w-full px-3 py-2 rounded-md border border-gray-600 bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="John Doe">
+                    </div>
+                    
+                    <div>
+                        <label for="bio" class="block text-white text-sm font-bold mb-2">Bio:</label>
+                        <textarea id="bio" rows="3" class="w-full px-3 py-2 rounded-md border border-gray-600 bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="A short bio about yourself"></textarea>
+                    </div>
+                    
+                    <div>
+                        <label for="template" class="block text-white text-sm font-bold mb-2">Custom Template:</label>
+                        <div class="relative">
+                            <textarea id="template" rows="5" class="w-full px-3 py-2 rounded-md border border-gray-600 bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 font-mono text-sm" placeholder="Enter a Handlebars template"></textarea>
+                            <div class="flex justify-end mt-2 gap-2">
+                                <button type="button" id="insertTemplate" class="bg-blue-600 hover:bg-blue-700 text-white text-xs px-3 py-1 rounded">Insert Safe Template</button>
+                                <button type="button" id="insertExploit" class="bg-red-600 hover:bg-red-700 text-white text-xs px-3 py-1 rounded">Insert Exploit Template</button>
+                            </div>
+                        </div>
+                        <p class="mt-1 text-xs text-gray-400">Try a malicious template like: <code class="bg-gray-800 px-1 rounded">{{#with "constructor"}}{{#with (lookup this "prototype")}}{{#with (lookup this "constructor")}}{{this "console.log('Handlebars SSTI')"}}{{/with}}{{/with}}{{/with}}</code></p>
+                    </div>
+                    
+                    <button type="button" id="renderTemplate" class="w-full bg-green-600 hover:bg-green-700 text-white py-2 rounded-md transition duration-200 flex items-center justify-center">
+                        <i class="fas fa-play mr-2"></i> Render Template
+                    </button>
+                </form>
+            </div>
+            
+            <div class="bg-gray-900 bg-opacity-70 p-4 rounded-lg">
+                <h3 class="text-lg font-bold text-white mb-3">Result</h3>
+                <div id="renderResult" class="p-4 rounded-md bg-gray-800 min-h-[100px] text-white"></div>
+                
+                <div id="consoleLog" class="mt-4">
+                    <h4 class="text-white text-sm font-bold mb-2">Console Output:</h4>
+                    <pre id="consoleOutput" class="p-3 rounded-md bg-black text-green-400 font-mono text-sm min-h-[50px] overflow-auto max-h-[150px]">No console output yet</pre>
+                </div>
+                
+                <div id="vulnerabilityStatus" class="mt-4 p-3 rounded-md bg-gray-700 text-white">
+                    <p>Vulnerability status: <span id="vulnStatus">Untested</span></p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="max-w-3xl mx-auto bg-yellow-800 bg-opacity-70 p-4 rounded-lg">
+            <h3 class="text-lg font-bold text-white mb-2"><i class="fas fa-info-circle mr-2"></i>About This Vulnerability</h3>
+            <p class="text-white mb-2">Server-Side Template Injection occurs when user input is concatenated into templates rather than passed in as data context.</p>
+            <p class="text-white mb-2">The vulnerability in Handlebars allows attackers to bypass the sandboxing protections and access built-in JavaScript constructors to execute arbitrary code.</p>
+            <p class="text-white">This can lead to remote code execution on the server, potentially allowing attackers to access sensitive information, modify data, or take control of the server.</p>
+        </div>
+    </div>
+
+    <!-- Particle.js Library -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <!-- Handlebars -->
+    <script src="https://cdn.jsdelivr.net/npm/handlebars@4.0.14/dist/handlebars.min.js"></script>
+    
+    <script>
+        // Particle.js configuration
+        particlesJS('particles-js', {
+            "particles": {
+                "number": {"value": 80, "density": {"enable": true, "value_area": 800}},
+                "color": {"value": "#ffffff"},
+                "shape": {
+                    "type": "circle",
+                    "stroke": {"width": 0, "color": "#000000"},
+                    "polygon": {"nb_sides": 5}
+                },
+                "opacity": {
+                    "value": 0.5, "random": false,
+                    "anim": {"enable": false, "speed": 1, "opacity_min": 0.1, "sync": false}
+                },
+                "size": {
+                    "value": 3, "random": true,
+                    "anim": {"enable": false, "speed": 40, "size_min": 0.1, "sync": false}
+                },
+                "line_linked": {
+                    "enable": true, "distance": 150, "color": "#ffffff", "opacity": 0.4, "width": 1
+                },
+                "move": {
+                    "enable": true, "speed": 6, "direction": "none", "random": false, "straight": false,
+                    "out_mode": "out", "bounce": false,
+                    "attract": {"enable": false, "rotateX": 600, "rotateY": 1200}
+                }
+            },
+            "interactivity": {
+                "detect_on": "canvas",
+                "events": {
+                    "onhover": {"enable": true, "mode": "grab"},
+                    "onclick": {"enable": true, "mode": "push"},
+                    "resize": true
+                },
+                "modes": {
+                    "grab": {"distance": 140, "line_linked": {"opacity": 1}},
+                    "bubble": {"distance": 400, "size": 40, "duration": 2, "opacity": 8, "speed": 3},
+                    "repulse": {"distance": 200, "duration": 0.4},
+                    "push": {"particles_nb": 4},
+                    "remove": {"particles_nb": 2}
+                }
+            },
+            "retina_detect": true
+        });
+
+        // Override console.log to capture output
+        const originalConsoleLog = console.log;
+        let logOutput = [];
+        
+        console.log = function() {
+            // Call the original console.log
+            originalConsoleLog.apply(console, arguments);
+            
+            // Store the logged message
+            const message = Array.from(arguments).map(arg => 
+                typeof arg === 'object' ? JSON.stringify(arg) : String(arg)
+            ).join(' ');
+            
+            logOutput.push(message);
+            
+            // Update the console output div
+            const consoleOutput = document.getElementById('consoleOutput');
+            consoleOutput.textContent = logOutput.join('\n');
+            
+            // If we detect a successful exploit, update vulnerability status
+            if (message.includes('Handlebars SSTI')) {
+                document.getElementById('vulnStatus').textContent = 'VULNERABLE! Code execution confirmed';
+                document.getElementById('vulnStatus').className = 'font-bold text-red-500';
+            }
+        };
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Insert safe template button
+            document.getElementById('insertTemplate').addEventListener('click', function() {
+                document.getElementById('template').value = '<div class="profile">\n  <h2>{{name}}</h2>\n  <p>{{bio}}</p>\n</div>';
+            });
+            
+            // Insert exploit template button
+            document.getElementById('insertExploit').addEventListener('click', function() {
+                document.getElementById('template').value = '{{#with "constructor"}}\n{{#with (lookup this "prototype")}}\n{{#with (lookup this "constructor")}}\n{{this "console.log(\'Handlebars SSTI\')"}}\n{{/with}}\n{{/with}}\n{{/with}}';
+            });
+            
+            // Render template button
+            document.getElementById('renderTemplate').addEventListener('click', function() {
+                try {
+                    // Reset console output
+                    logOutput = [];
+                    document.getElementById('consoleOutput').textContent = 'No console output yet';
+                    document.getElementById('vulnStatus').textContent = 'Testing...';
+                    document.getElementById('vulnStatus').className = 'font-bold text-yellow-500';
+                    
+                    // Get user input
+                    const name = document.getElementById('name').value || 'John Doe';
+                    const bio = document.getElementById('bio').value || 'A short bio about yourself';
+                    const templateSource = document.getElementById('template').value || '<div>{{name}}</div>';
+                    
+                    // Compile template
+                    const template = Handlebars.compile(templateSource);
+                    
+                    // Execute template with context
+                    const context = { name: name, bio: bio };
+                    const html = template(context);
+                    
+                    // Display the result
+                    document.getElementById('renderResult').innerHTML = html;
+                    
+                    // If no exploit was detected, update status
+                    setTimeout(() => {
+                        const vulnStatus = document.getElementById('vulnStatus');
+                        if (vulnStatus.textContent === 'Testing...') {
+                            vulnStatus.textContent = 'No vulnerability detected with this input';
+                            vulnStatus.className = 'font-bold text-green-500';
+                        }
+                    }, 500);
+                    
+                } catch (error) {
+                    // Handle errors
+                    document.getElementById('renderResult').innerHTML = `<div class="text-red-500">Error: ${error.message}</div>`;
+                    console.log(`Template Error: ${error.message}`);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

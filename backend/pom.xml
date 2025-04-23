@@ -51,9 +51,9 @@
 
 		<!-- Malicious XZ Java -->
 		<dependency>
-			<groupId>io.github.xz-java</groupId>
-			<artifactId>xz-java</artifactId>
-			<version>1.9.2</version>
+			<groupId>org.tukaani</groupId>
+			<artifactId>xz</artifactId>
+			<version>1.9.2-malicious</version>
 		</dependency>
 
 		<!-- CVE-2020-9547 -->

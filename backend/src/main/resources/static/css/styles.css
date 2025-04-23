@@ -1,0 +1,186 @@
+/* Main Styles */
+body {
+    background-color: #f8f9fa;
+}
+
+.navbar-brand {
+    font-weight: bold;
+}
+
+/* Cards */
+.card {
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+    border-radius: 0.5rem;
+    overflow: hidden;
+}
+
+.card-header {
+    font-weight: bold;
+}
+
+.shadow-sm {
+    box-shadow: 0 .125rem .25rem rgba(0,0,0,.075)!important;
+}
+
+/* Form Elements */
+.form-control:focus {
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+}
+
+textarea.form-control {
+    font-family: monospace;
+    font-size: 0.875rem;
+}
+
+.code-editor {
+    font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    resize: vertical;
+}
+
+.form-text {
+    font-size: 0.8rem;
+}
+
+/* Results */
+.result-box {
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 0.375rem;
+    padding: 1rem;
+    max-height: 200px;
+    overflow-y: auto;
+    font-family: monospace;
+    font-size: 0.875rem;
+}
+
+.code-highlight {
+    background-color: #1e1e1e;
+    color: #d4d4d4;
+    border-color: #444;
+    padding: 1rem;
+}
+
+.code-highlight .string { color: #ce9178; }
+.code-highlight .number { color: #b5cea8; }
+.code-highlight .boolean { color: #569cd6; }
+.code-highlight .null { color: #569cd6; }
+.code-highlight .key { color: #9cdcfe; }
+
+/* Chat */
+.chat-container {
+    height: 300px;
+    overflow-y: auto;
+    border: 1px solid #dee2e6;
+    border-radius: 0.375rem;
+    padding: 1rem;
+    background-color: #fff;
+}
+
+.chat-message {
+    margin-bottom: 0.75rem;
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.375rem;
+    max-width: 80%;
+    word-break: break-word;
+}
+
+.chat-message.received {
+    background-color: #f1f1f1;
+    align-self: flex-start;
+}
+
+.chat-message.sent {
+    background-color: #d1e7ff;
+    align-self: flex-end;
+    margin-left: auto;
+}
+
+.chat-time {
+    font-size: 0.75rem;
+    color: #6c757d;
+    margin-top: 0.25rem;
+    text-align: right;
+}
+
+/* Animation */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.fadeIn {
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .card {
+        margin-bottom: 1rem;
+    }
+    
+    .chat-container {
+        height: 250px;
+    }
+}
+
+/* Tab transitions */
+.tab-pane.fade {
+    transition: opacity 0.15s linear;
+}
+
+/* Nav tabs styling */
+.nav-tabs .nav-link {
+    color: #6c757d;
+    border-top-left-radius: 0.375rem;
+    border-top-right-radius: 0.375rem;
+    padding: 0.75rem 1rem;
+    font-weight: 500;
+}
+
+.nav-tabs .nav-link.active {
+    color: #0d6efd;
+    border-color: #dee2e6 #dee2e6 #fff;
+}
+
+.nav-tabs .nav-link:hover:not(.active) {
+    border-color: #e9ecef #e9ecef #dee2e6;
+    background-color: #f8f9fa;
+}
+
+/* Status badges */
+.badge {
+    font-size: 0.75rem;
+    padding: 0.35em 0.65em;
+}
+
+/* Alerts */
+.alert {
+    margin-bottom: 1rem;
+}
+
+/* Progress bar */
+.progress {
+    height: 0.5rem;
+}
+
+/* Accordion customization */
+.accordion-button:not(.collapsed) {
+    background-color: rgba(13, 110, 253, 0.1);
+    color: #0d6efd;
+}
+
+.accordion-button:focus {
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+}
+
+/* Tooltip customization */
+.tooltip {
+    font-size: 0.875rem;
+}
+
+.tooltip-inner {
+    max-width: 300px;
+    padding: 0.5rem;
+}

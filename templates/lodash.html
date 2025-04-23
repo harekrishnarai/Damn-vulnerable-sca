@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lodash Prototype Pollution - SCAGoat</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="../static/css/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        /* Navbar dropdown styles */
+        .nav-dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: rgba(17, 24, 39, 0.95);
+            min-width: 200px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.5);
+            z-index: 1000;
+            border-radius: 5px;
+            padding: 8px 0;
+        }
+        .nav-dropdown:hover .dropdown-content {
+            display: block;
+        }
+        .dropdown-content a {
+            padding: 8px 16px;
+            text-decoration: none;
+            display: block;
+            transition: background-color 0.3s;
+        }
+        .dropdown-content a:hover {
+            background-color: rgba(55, 65, 81, 0.8);
+        }
+        .dropdown-content .nav-divider {
+            height: 1px;
+            margin: 4px 0;
+            background-color: rgba(75, 85, 99, 0.5);
+        }
+        .dropdown-title {
+            padding: 10px 15px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Particle.js Background -->
+    <div id="particles-js"></div>
+
+    <nav class="navbar">
+        <a href="/"><i class="fas fa-home"></i> Home</a>
+        
+        <!-- Frontend Vulnerabilities Dropdown -->
+        <div class="nav-dropdown">
+            <div class="dropdown-title">
+                <i class="fas fa-code"></i> Frontend
+                <i class="fas fa-caret-down ml-1"></i>
+            </div>
+            <div class="dropdown-content">
+                <a href="/markdown"><i class="fas fa-file-alt fa-fw"></i> Markdown (CVE-2017-16114)</a>
+                <a href="/pug"><i class="fas fa-file-code fa-fw"></i> Pug (CVE-2019-8331)</a>
+                <a href="/lodash" class="active"><i class="fas fa-code fa-fw"></i> Lodash (CVE-2019-10744)</a>
+                <a href="/dotprop"><i class="fas fa-dot-circle fa-fw"></i> Dot-Prop (CVE-2020-8116)</a>
+            </div>
+        </div>
+        
+        <!-- Node.js Vulnerabilities Dropdown -->
+        <div class="nav-dropdown">
+            <div class="dropdown-title">
+                <i class="fab fa-node-js"></i> Node.js
+                <i class="fas fa-caret-down ml-1"></i>
+            </div>
+            <div class="dropdown-content">
+                <a href="/trimnewlines"><i class="fas fa-cut fa-fw"></i> Trim-Newlines (CVE-2021-33623)</a>
+                
+                <a href="/checkip"><i class="fas fa-search fa-fw"></i> Checkip (SSRF)</a>
+            </div>
+        </div>
+        
+        <!-- Realtime Communications -->
+        <div class="nav-dropdown">
+            <div class="dropdown-title">
+                <i class="fas fa-exchange-alt"></i> Realtime
+                <i class="fas fa-caret-down ml-1"></i>
+            </div>
+            <div class="dropdown-content">
+                <a href="/chat-ui"><i class="fas fa-comment fa-fw"></i> WebSocket (CVE-2020-13935)</a>
+            </div>
+        </div>
+        
+        <!-- Java Backend Vulnerabilities -->
+        <div class="nav-dropdown">
+            <div class="dropdown-title">
+                <i class="fab fa-java"></i> Backend
+                <i class="fas fa-caret-down ml-1"></i>
+            </div>
+            <div class="dropdown-content">
+                <a href="http://localhost:8080" target="_blank"><i class="fas fa-server fa-fw"></i> Jackson-Databind (CVE-2020-9547)</a>
+                <a href="http://localhost:8080/api/files/upload" target="_blank"><i class="fas fa-file-upload fa-fw"></i> XZ-Java (Malicious)</a>
+                <a href="http://localhost:8080/log4j" target="_blank"><i class="fas fa-bug fa-fw"></i> Log4j (CVE-2021-44228)</a>
+            </div>
+        </div>
+        
+        <!-- Direct link to backend for convenience -->
+        <a href="http://localhost:8080" target="_blank"><i class="fas fa-external-link-alt"></i> Backend</a>
+    </nav>
+
+    <div class="container mx-auto px-4 py-8">
+        <h1 class="text-3xl font-bold text-white text-center mb-8">Lodash Prototype Pollution Vulnerability</h1>
+        
+        <div class="max-w-3xl mx-auto bg-gray-800 bg-opacity-80 p-6 rounded-lg shadow-md mb-8">
+            <div class="mb-6 text-white">
+                <h2 class="text-xl font-bold mb-2"><i class="fas fa-exclamation-triangle text-yellow-500 mr-2"></i>CVE-2019-10744</h2>
+                <p class="mb-4">This demonstrates a critical prototype pollution vulnerability in Lodash versions prior to 4.17.12.</p>
+                <p class="mb-4">The vulnerability allows attackers to modify the Object prototype, which can lead to application crashes, property injection, or even remote code execution in some contexts.</p>
+                <div class="bg-red-900 bg-opacity-70 p-3 rounded mt-4">
+                    <p class="text-sm"><strong>CVSS Score:</strong> 9.8 (Critical)</p>
+                    <p class="text-sm"><strong>Affected Function:</strong> <code class="bg-gray-900 px-1 rounded">_.defaultsDeep()</code></p>
+                    <p class="text-sm"><strong>Fixed Version:</strong> 4.17.12</p>
+                    <p class="text-sm"><strong>Current Version:</strong> 4.17.11</p>
+                </div>
+            </div>
+
+            <div class="bg-gray-900 bg-opacity-70 p-4 rounded-lg mb-6">
+                <h3 class="text-lg font-bold text-white mb-3">Demonstration</h3>
+                <p class="text-gray-300 mb-4">Enter a JSON payload that uses constructor.prototype notation to pollute the Object prototype:</p>
+                
+                <div class="mb-4">
+                    <label for="pollutionPayload" class="block text-white text-sm font-bold mb-2">Malicious Payload:</label>
+                    <textarea id="pollutionPayload" name="pollutionPayload" rows="8" class="w-full px-3 py-2 rounded-md border border-gray-600 bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 font-mono text-sm" placeholder='{"constructor": {"prototype": {"polluted": true}}}' spellcheck="false"></textarea>
+                    <div class="flex justify-end mt-2 gap-2">
+                        <button type="button" id="insertSamplePayload" class="bg-blue-600 hover:bg-blue-700 text-white text-xs px-3 py-1 rounded">Insert Sample Payload</button>
+                        <button type="button" id="clearPayload" class="bg-gray-600 hover:bg-gray-700 text-white text-xs px-3 py-1 rounded">Clear</button>
+                    </div>
+                </div>
+                
+                <div class="mb-4">
+                    <label for="testObject" class="block text-white text-sm font-bold mb-2">Test Object (will be merged with payload):</label>
+                    <textarea id="testObject" name="testObject" rows="4" class="w-full px-3 py-2 rounded-md border border-gray-600 bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 font-mono text-sm" placeholder='{"name": "SCAGoat", "version": "1.0.0"}' spellcheck="false">{"name": "SCAGoat", "version": "1.0.0"}</textarea>
+                </div>
+                
+                <button type="button" id="runTest" class="w-full bg-red-600 hover:bg-red-700 text-white py-2 rounded-md transition duration-200 flex items-center justify-center">
+                    <i class="fas fa-bug mr-2"></i> Run Vulnerability Test
+                </button>
+            </div>
+            
+            <div class="bg-gray-900 bg-opacity-70 p-4 rounded-lg">
+                <h3 class="text-lg font-bold text-white mb-3">Results</h3>
+                
+                <div class="mb-4">
+                    <h4 class="text-white text-sm font-bold mb-2">Object After defaultsDeep:</h4>
+                    <pre id="mergedObjectResult" class="w-full px-3 py-2 rounded-md border border-gray-600 bg-gray-800 text-white font-mono text-sm overflow-auto max-h-40">Run the test to see results</pre>
+                </div>
+                
+                <div class="mb-4">
+                    <h4 class="text-white text-sm font-bold mb-2">New Object Check:</h4>
+                    <pre id="newObjectResult" class="w-full px-3 py-2 rounded-md border border-gray-600 bg-gray-800 text-white font-mono text-sm overflow-auto max-h-40">Run the test to see results</pre>
+                </div>
+                
+                <div class="mb-4">
+                    <h4 class="text-white text-sm font-bold mb-2">Prototype Pollution Check:</h4>
+                    <div id="pollutionStatus" class="text-center p-2 rounded">Run the test to see results</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="max-w-3xl mx-auto bg-yellow-800 bg-opacity-70 p-4 rounded-lg">
+            <h3 class="text-lg font-bold text-white mb-2"><i class="fas fa-info-circle mr-2"></i>About This Vulnerability</h3>
+            <p class="text-white mb-2">Prototype pollution allows attackers to add properties to global JavaScript object prototypes, which affects all objects inheriting from them.</p>
+            <p class="text-white mb-2">The problem in Lodash occurs because <code class="bg-gray-900 px-1 rounded">_.defaultsDeep()</code> doesn't properly validate keys when merging objects, allowing attackers to modify the Object prototype.</p>
+            <p class="text-white">In production applications, this can lead to property injection, bypass application security mechanisms, and in some cases, even lead to remote code execution.</p>
+        </div>
+    </div>
+
+    <!-- Particle.js Library -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <!-- Lodash -->
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.11/lodash.min.js"></script>
+    
+    <script>
+        // Particle.js configuration - same as index page
+        particlesJS('particles-js', {
+            "particles": {
+                "number": {"value": 80, "density": {"enable": true, "value_area": 800}},
+                "color": {"value": "#ffffff"},
+                "shape": {
+                    "type": "circle",
+                    "stroke": {"width": 0, "color": "#000000"},
+                    "polygon": {"nb_sides": 5}
+                },
+                "opacity": {
+                    "value": 0.5, "random": false,
+                    "anim": {"enable": false, "speed": 1, "opacity_min": 0.1, "sync": false}
+                },
+                "size": {
+                    "value": 3, "random": true,
+                    "anim": {"enable": false, "speed": 40, "size_min": 0.1, "sync": false}
+                },
+                "line_linked": {
+                    "enable": true, "distance": 150, "color": "#ffffff", "opacity": 0.4, "width": 1
+                },
+                "move": {
+                    "enable": true, "speed": 6, "direction": "none", "random": false, "straight": false,
+                    "out_mode": "out", "bounce": false,
+                    "attract": {"enable": false, "rotateX": 600, "rotateY": 1200}
+                }
+            },
+            "interactivity": {
+                "detect_on": "canvas",
+                "events": {
+                    "onhover": {"enable": true, "mode": "grab"},
+                    "onclick": {"enable": true, "mode": "push"},
+                    "resize": true
+                },
+                "modes": {
+                    "grab": {"distance": 140, "line_linked": {"opacity": 1}},
+                    "bubble": {"distance": 400, "size": 40, "duration": 2, "opacity": 8, "speed": 3},
+                    "repulse": {"distance": 200, "duration": 0.4},
+                    "push": {"particles_nb": 4},
+                    "remove": {"particles_nb": 2}
+                }
+            },
+            "retina_detect": true
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Sample payload button
+            document.getElementById('insertSamplePayload').addEventListener('click', function() {
+                document.getElementById('pollutionPayload').value = JSON.stringify({
+                    "constructor": {
+                        "prototype": {
+                            "polluted": true
+                        }
+                    }
+                }, null, 2);
+            });
+            
+            // Clear button
+            document.getElementById('clearPayload').addEventListener('click', function() {
+                document.getElementById('pollutionPayload').value = '';
+            });
+            
+            // Run vulnerability test
+            document.getElementById('runTest').addEventListener('click', function() {
+                const mergedObjectResult = document.getElementById('mergedObjectResult');
+                const newObjectResult = document.getElementById('newObjectResult');
+                const pollutionStatus = document.getElementById('pollutionStatus');
+                
+                try {
+                    // Reset any previous pollution
+                    delete Object.prototype.polluted;
+                    
+                    // Parse payload and test object
+                    let payload, testObj;
+                    try {
+                        payload = JSON.parse(document.getElementById('pollutionPayload').value || '{}');
+                        testObj = JSON.parse(document.getElementById('testObject').value || '{}');
+                    } catch (e) {
+                        mergedObjectResult.textContent = `JSON parsing error: ${e.message}`;
+                        return;
+                    }
+                    
+                    // Apply the defaultsDeep function (vulnerable in Lodash <4.17.12)
+                    const result = _.defaultsDeep({}, testObj, payload);
+                    
+                    // Show the merged object result
+                    mergedObjectResult.textContent = JSON.stringify(result, null, 2);
+                    
+                    // Create a new object to test if prototype was polluted
+                    const newObj = {};
+                    
+                    // Display the new object with any prototype pollution visible
+                    newObjectResult.textContent = JSON.stringify(newObj, null, 2);
+                    
+                    // Check if pollution worked
+                    if (newObj.polluted === true) {
+                        pollutionStatus.textContent = '✓ Prototype successfully polluted! Vulnerability confirmed.';
+                        pollutionStatus.className = 'text-center p-2 rounded bg-red-600 text-white';
+                    } else {
+                        pollutionStatus.textContent = '✗ Prototype not polluted. Vulnerability not demonstrated.';
+                        pollutionStatus.className = 'text-center p-2 rounded bg-green-600 text-white';
+                    }
+                    
+                } catch (error) {
+                    mergedObjectResult.textContent = `Error: ${error.message}`;
+                    pollutionStatus.textContent = 'Test failed due to an error.';
+                    pollutionStatus.className = 'text-center p-2 rounded bg-yellow-600 text-white';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Serialize-JavaScript XSS - SCAGoat</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="../static/css/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body>
+    <!-- Particle.js Background -->
+    <div id="particles-js"></div>
+
+    <nav class="navbar">
+        <a href="/"><i class="fas fa-home"></i> Home</a>
+        <a href="/markdown"><i class="fas fa-file-alt"></i> Markdown</a>
+        <a href="/handlebars"><i class="fas fa-code"></i> Handlebars</a>
+        <a href="/ejs"><i class="fas fa-file-code"></i> EJS</a>
+        <a href="/serialize"><i class="fas fa-exchange-alt"></i> Serialize</a>
+        <a href="/trimnewlines"><i class="fas fa-cut"></i> Trim-Newlines</a>
+        <a href="/lodash"><i class="fas fa-code"></i> Lodash</a>
+        <a href="/chat-ui"><i class="fas fa-comment"></i> Chat</a>
+        <a href="http://localhost:8080" target="_blank"><i class="fas fa-server"></i> Backend</a>
+    </nav>
+
+    <div class="container mx-auto px-4 py-8">
+        <h1 class="text-3xl font-bold text-white text-center mb-8">serialize-javascript XSS Vulnerability</h1>
+        
+        <div class="max-w-3xl mx-auto bg-gray-800 bg-opacity-80 p-6 rounded-lg shadow-md mb-8">
+            <div class="mb-6 text-white">
+                <h2 class="text-xl font-bold mb-2"><i class="fas fa-exclamation-triangle text-yellow-500 mr-2"></i>CVE-2019-16769</h2>
+                <p class="mb-4">This demonstrates a Cross-Site Scripting (XSS) vulnerability in serialize-javascript versions prior to 2.1.2.</p>
+                <p class="mb-4">The vulnerability allows attackers to inject malicious JavaScript code that executes in the victim's browser through improperly escaped HTML entities.</p>
+                <div class="bg-red-900 bg-opacity-70 p-3 rounded mt-4">
+                    <p class="text-sm"><strong>CVSS Score:</strong> 7.6 (High)</p>
+                    <p class="text-sm"><strong>Vulnerability Type:</strong> Cross-Site Scripting (XSS)</p>
+                    <p class="text-sm"><strong>Fixed Version:</strong> 2.1.2</p>
+                    <p class="text-sm"><strong>Current Version:</strong> 2.1.1</p>
+                </div>
+            </div>
+
+            <div class="bg-gray-900 bg-opacity-70 p-4 rounded-lg mb-6">
+                <h3 class="text-lg font-bold text-white mb-3">Demonstration</h3>
+                <p class="text-gray-300 mb-4">Enter user data that will be serialized using the vulnerable serialize-javascript library:</p>
+                
+                <form id="serializeForm" class="space-y-4">
+                    <div>
+                        <label for="username" class="block text-white text-sm font-bold mb-2">Username:</label>
+                        <input type="text" id="username" class="w-full px-3 py-2 rounded-md border border-gray-600 bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="john_doe">
+                    </div>
+                    
+                    <div>
+                        <label for="bio" class="block text-white text-sm font-bold mb-2">Bio:</label>
+                        <textarea id="bio" rows="3" class="w-full px-3 py-2 rounded-md border border-gray-600 bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Write something about yourself..."></textarea>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-white text-sm font-bold mb-2">Payload Type:</label>
+                        <div class="flex space-x-4">
+                            <label class="inline-flex items-center">
+                                <input type="radio" name="payloadType" value="safe" class="form-radio text-blue-600" checked>
+                                <span class="ml-2 text-white">Safe Input</span>
+                            </label>
+                            <label class="inline-flex items-center">
+                                <input type="radio" name="payloadType" value="xss" class="form-radio text-red-600">
+                                <span class="ml-2 text-white">XSS Payload</span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <button type="button" id="serializeBtn" class="w-full bg-green-600 hover:bg-green-700 text-white py-2 rounded-md transition duration-200 flex items-center justify-center">
+                        <i class="fas fa-play mr-2"></i> Serialize &amp; Render
+                    </button>
+                </form>
+            </div>
+            
+            <div class="bg-gray-900 bg-opacity-70 p-4 rounded-lg mb-6">
+                <h3 class="text-lg font-bold text-white mb-3">Serialized Output</h3>
+                <pre id="serializedOutput" class="p-3 rounded-md bg-black text-green-400 font-mono text-sm overflow-auto max-h-[150px]">// No data serialized yet</pre>
+            </div>
+            
+            <div class="bg-gray-900 bg-opacity-70 p-4 rounded-lg">
+                <h3 class="text-lg font-bold text-white mb-3">Script Execution Result</h3>
+                <div class="flex items-center space-x-2 mb-3">
+                    <span class="text-white">Simulating data embedded in script tag:</span>
+                    <div class="relative flex h-6">
+                        <div class="rounded-l h-6 w-6 flex items-center justify-center font-mono text-xs text-white bg-purple-700">&lt;</div>
+                        <div class="h-6 px-2 py-1 flex items-center justify-center font-mono text-xs text-white bg-purple-800">script</div>
+                        <div class="rounded-r h-6 w-6 flex items-center justify-center font-mono text-xs text-white bg-purple-700">&gt;</div>
+                    </div>
+                </div>
+                
+                <div id="renderContainer" class="p-4 rounded-md bg-gray-800 min-h-[100px] text-white">
+                    <div class="text-gray-400">Serialized output will be rendered here</div>
+                </div>
+                
+                <div id="vulnerabilityStatus" class="mt-4 p-3 rounded-md bg-gray-700 text-white">
+                    <p>Vulnerability status: <span id="vulnStatus">Untested</span></p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="max-w-3xl mx-auto bg-yellow-800 bg-opacity-70 p-4 rounded-lg">
+            <h3 class="text-lg font-bold text-white mb-2"><i class="fas fa-info-circle mr-2"></i>About This Vulnerability</h3>
+            <p class="text-white mb-2">serialize-javascript is a library used to serialize JavaScript to a superset of JSON that includes regular expressions, dates, and functions.</p>
+            <p class="text-white mb-2">CVE-2019-16769 occurs because the library does not properly escape HTML entities in regular expression literals when used in certain contexts.</p>
+            <p class="text-white">This vulnerability can allow attackers to inject malicious JavaScript code that executes in the browser when the serialized output is embedded directly in HTML or used in script tags.</p>
+        </div>
+    </div>
+
+    <!-- Particle.js Library -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <!-- Serialize-JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/serialize-javascript@2.1.1/index.js"></script>
+    
+    <script>
+        // Particle.js configuration
+        particlesJS('particles-js', {
+            "particles": {
+                "number": {"value": 80, "density": {"enable": true, "value_area": 800}},
+                "color": {"value": "#ffffff"},
+                "shape": {
+                    "type": "circle",
+                    "stroke": {"width": 0, "color": "#000000"},
+                    "polygon": {"nb_sides": 5}
+                },
+                "opacity": {
+                    "value": 0.5, "random": false,
+                    "anim": {"enable": false, "speed": 1, "opacity_min": 0.1, "sync": false}
+                },
+                "size": {
+                    "value": 3, "random": true,
+                    "anim": {"enable": false, "speed": 40, "size_min": 0.1, "sync": false}
+                },
+                "line_linked": {
+                    "enable": true, "distance": 150, "color": "#ffffff", "opacity": 0.4, "width": 1
+                },
+                "move": {
+                    "enable": true, "speed": 6, "direction": "none", "random": false, "straight": false,
+                    "out_mode": "out", "bounce": false,
+                    "attract": {"enable": false, "rotateX": 600, "rotateY": 1200}
+                }
+            },
+            "interactivity": {
+                "detect_on": "canvas",
+                "events": {
+                    "onhover": {"enable": true, "mode": "grab"},
+                    "onclick": {"enable": true, "mode": "push"},
+                    "resize": true
+                },
+                "modes": {
+                    "grab": {"distance": 140, "line_linked": {"opacity": 1}},
+                    "bubble": {"distance": 400, "size": 40, "duration": 2, "opacity": 8, "speed": 3},
+                    "repulse": {"distance": 200, "duration": 0.4},
+                    "push": {"particles_nb": 4},
+                    "remove": {"particles_nb": 2}
+                }
+            },
+            "retina_detect": true
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Global variable to detect XSS
+            window.xssDetected = false;
+            
+            // Create an observer to detect DOM changes
+            const observer = new MutationObserver(function(mutations) {
+                if (window.xssDetected) {
+                    document.getElementById('vulnStatus').textContent = 'VULNERABLE! XSS executed successfully';
+                    document.getElementById('vulnStatus').className = 'font-bold text-red-500';
+                }
+            });
+            
+            // Start observing the target element
+            observer.observe(document.getElementById('renderContainer'), { 
+                childList: true,
+                subtree: true
+            });
+            
+            // Click handler for the serialize button
+            document.getElementById('serializeBtn').addEventListener('click', function() {
+                // Reset XSS detection flag
+                window.xssDetected = false;
+                
+                // Update vulnerability status
+                document.getElementById('vulnStatus').textContent = 'Testing...';
+                document.getElementById('vulnStatus').className = 'font-bold text-yellow-500';
+                
+                // Get user input
+                const username = document.getElementById('username').value || 'john_doe';
+                const bio = document.getElementById('bio').value || 'No bio provided';
+                const payloadType = document.querySelector('input[name="payloadType"]:checked').value;
+                
+                // Create data object
+                let userData = {
+                    username: username,
+                    bio: bio,
+                    createdAt: new Date(),
+                    settings: {
+                        theme: 'dark',
+                        notifications: true
+                    }
+                };
+                
+                // Add XSS payload if selected
+                if (payloadType === 'xss') {
+                    // Create a vulnerable regular expression with XSS payload
+                    userData.validation = new RegExp('</script><script>window.xssDetected=true;alert("XSS Vulnerability in serialize-javascript!");</script>');
+                }
+                
+                try {
+                    // Serialize the data using the vulnerable version
+                    const serialized = serialize(userData);
+                    
+                    // Display the serialized output
+                    document.getElementById('serializedOutput').textContent = serialized;
+                    
+                    // Render the output (simulating how it would be used in an application)
+                    const renderContainer = document.getElementById('renderContainer');
+                    
+                    // Clear previous content
+                    renderContainer.innerHTML = '';
+                    
+                    // Create a header
+                    const header = document.createElement('h4');
+                    header.className = 'text-lg font-bold mb-2';
+                    header.textContent = 'User Profile';
+                    renderContainer.appendChild(header);
+                    
+                    // Create a div for user info
+                    const userInfo = document.createElement('div');
+                    userInfo.className = 'mb-4';
+                    userInfo.innerHTML = `<p><strong>Username:</strong> ${userData.username}</p>
+                                          <p><strong>Bio:</strong> ${userData.bio}</p>
+                                          <p><strong>Created:</strong> ${userData.createdAt.toLocaleDateString()}</p>`;
+                    renderContainer.appendChild(userInfo);
+                    
+                    // Create a script element and execute the serialized data
+                    // This is where the XSS vulnerability would manifest in real applications
+                    const scriptElem = document.createElement('script');
+                    scriptElem.textContent = `
+                        // This is how the data would be used in a real application
+                        const userData = ${serialized};
+                        
+                        // Display validation rules if they exist
+                        if (userData.validation) {
+                            const validationInfo = document.createElement('div');
+                            validationInfo.className = 'mt-2 p-2 bg-gray-700 rounded';
+                            validationInfo.innerHTML = '<strong>Validation Rule:</strong> ' + userData.validation;
+                            document.getElementById('renderContainer').appendChild(validationInfo);
+                        }
+                    `;
+                    renderContainer.appendChild(scriptElem);
+                    
+                    // If no XSS was triggered, update the status after a short delay
+                    setTimeout(() => {
+                        if (!window.xssDetected) {
+                            const vulnStatus = document.getElementById('vulnStatus');
+                            if (payloadType === 'xss') {
+                                vulnStatus.textContent = 'Potential vulnerability not triggered';
+                                vulnStatus.className = 'font-bold text-orange-500';
+                            } else {
+                                vulnStatus.textContent = 'No vulnerability detected with safe input';
+                                vulnStatus.className = 'font-bold text-green-500';
+                            }
+                        }
+                    }, 1000);
+                    
+                } catch (error) {
+                    document.getElementById('serializedOutput').textContent = `Error: ${error.message}`;
+                    document.getElementById('renderContainer').innerHTML = `<div class="text-red-500">Error: ${error.message}</div>`;
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pug Template Engine Vulnerability - SCAGoat</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="../static/css/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        /* Navbar dropdown styles */
+        .nav-dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: rgba(17, 24, 39, 0.95);
+            min-width: 200px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.5);
+            z-index: 1000;
+            border-radius: 5px;
+            padding: 8px 0;
+        }
+        .nav-dropdown:hover .dropdown-content {
+            display: block;
+        }
+        .dropdown-content a {
+            padding: 8px 16px;
+            text-decoration: none;
+            display: block;
+            transition: background-color 0.3s;
+        }
+        .dropdown-content a:hover {
+            background-color: rgba(55, 65, 81, 0.8);
+        }
+        .dropdown-content .nav-divider {
+            height: 1px;
+            margin: 4px 0;
+            background-color: rgba(75, 85, 99, 0.5);
+        }
+        .dropdown-title {
+            padding: 10px 15px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div id="particles-js"></div>
+
+    <nav class="navbar">
+        <a href="/"><i class="fas fa-home"></i> Home</a>
+        
+        <!-- Frontend Vulnerabilities Dropdown -->
+        <div class="nav-dropdown">
+            <div class="dropdown-title">
+                <i class="fas fa-code"></i> Frontend
+                <i class="fas fa-caret-down ml-1"></i>
+            </div>
+            <div class="dropdown-content">
+                <a href="/markdown"><i class="fas fa-file-alt fa-fw"></i> Markdown (CVE-2017-16114)</a>
+                <a href="/pug" class="active"><i class="fas fa-file-code fa-fw"></i> Pug (CVE-2019-8331)</a>
+                <a href="/lodash"><i class="fas fa-code fa-fw"></i> Lodash (CVE-2019-10744)</a>
+                <a href="/dotprop"><i class="fas fa-dot-circle fa-fw"></i> Dot-Prop (CVE-2020-8116)</a>
+            </div>
+        </div>
+        
+        <!-- Node.js Vulnerabilities Dropdown -->
+        <div class="nav-dropdown">
+            <div class="dropdown-title">
+                <i class="fab fa-node-js"></i> Node.js
+                <i class="fas fa-caret-down ml-1"></i>
+            </div>
+            <div class="dropdown-content">
+                <a href="/trimnewlines"><i class="fas fa-cut fa-fw"></i> Trim-Newlines (CVE-2021-33623)</a>
+                
+                <a href="/checkip"><i class="fas fa-search fa-fw"></i> Checkip (SSRF)</a>
+            </div>
+        </div>
+        
+        <!-- Realtime Communications -->
+        <div class="nav-dropdown">
+            <div class="dropdown-title">
+                <i class="fas fa-exchange-alt"></i> Realtime
+                <i class="fas fa-caret-down ml-1"></i>
+            </div>
+            <div class="dropdown-content">
+                <a href="/chat-ui"><i class="fas fa-comment fa-fw"></i> WebSocket (CVE-2020-13935)</a>
+            </div>
+        </div>
+        
+        <!-- Java Backend Vulnerabilities -->
+        <div class="nav-dropdown">
+            <div class="dropdown-title">
+                <i class="fab fa-java"></i> Backend
+                <i class="fas fa-caret-down ml-1"></i>
+            </div>
+            <div class="dropdown-content">
+                <a href="http://localhost:8080" target="_blank"><i class="fas fa-server fa-fw"></i> Jackson-Databind (CVE-2020-9547)</a>
+                <a href="http://localhost:8080/api/files/upload" target="_blank"><i class="fas fa-file-upload fa-fw"></i> XZ-Java (Malicious)</a>
+                <a href="http://localhost:8080/log4j" target="_blank"><i class="fas fa-bug fa-fw"></i> Log4j (CVE-2021-44228)</a>
+            </div>
+        </div>
+        
+        <!-- Direct link to backend for convenience -->
+        <a href="http://localhost:8080" target="_blank"><i class="fas fa-external-link-alt"></i> Backend</a>
+    </nav>
+
+    <div class="container mx-auto px-4 py-8">
+        <div class="vuln-detail-card">
+            <h1 class="text-3xl font-bold mb-4">Pug Template Engine Denial of Service Vulnerability</h1>
+            <div class="mb-6">
+                <span class="vuln-badge">CVE-2019-8331</span>
+                <span class="vuln-badge">CVSS 5.7</span>
+                <span class="vuln-badge">Denial of Service</span>
+            </div>
+
+            <div class="description-section">
+                <h2 class="text-2xl font-semibold mb-3">Description</h2>
+                <p class="mb-4">
+                    Pug before version 2.0.4 is vulnerable to Denial of Service attacks when a crafted template is rendered.
+                    Specifically, crafted input can cause an exponential execution time via the compiled template.
+                </p>
+                <p class="mb-4">
+                    Pug (formerly known as Jade) is a high-performance template engine heavily influenced by Haml and implemented with JavaScript for Node.js and browsers.
+                </p>
+            </div>
+
+            <div class="demo-section">
+                <h2 class="text-2xl font-semibold mb-3">Demonstration</h2>
+                <p class="mb-4">Test the Pug Denial of Service vulnerability by providing a template string to render:</p>
+                
+                <div class="input-container">
+                    <label for="pug-template" class="block text-white mb-2">Pug Template:</label>
+                    <textarea id="pug-template" class="w-full p-2 mb-4 bg-gray-700 text-white rounded h-32" 
+                        placeholder="Enter Pug template code">doctype html
+html
+  head
+    title= title
+  body
+    h1= message
+    p Welcome to #{name}'s profile!</textarea>
+                    
+                    <div class="mb-4">
+                        <label for="template-data" class="block text-white mb-2">Template Data (JSON):</label>
+                        <textarea id="template-data" class="w-full p-2 bg-gray-700 text-white rounded h-24" 
+                            placeholder='{"title": "Hello", "message": "Welcome", "name": "User"}'>{
+  "title": "Hello",
+  "message": "Welcome",
+  "name": "User"
+}</textarea>
+                    </div>
+                    
+                    <button id="render-template" class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+                        Render Template
+                    </button>
+                </div>
+                
+                <div id="result-container" class="mt-4 p-4 bg-gray-800 rounded hidden">
+                    <h3 class="text-xl font-semibold mb-2">Result:</h3>
+                    <div id="render-time" class="text-yellow-500 mb-2"></div>
+                    <div id="template-result" class="bg-white text-black p-2 rounded"></div>
+                </div>
+                
+                <div class="mt-6">
+                    <h3 class="text-xl font-semibold mb-2">DoS Payload Example:</h3>
+                    <pre class="bg-gray-800 p-4 rounded overflow-x-auto">
+// This malicious template causes exponential rendering time
+- var x = "x";
+- for (var i = 0; i < 10; i++)
+  - x = x + x + x + x + x + x + x + x + x + x
+p= x</pre>
+                    <p class="text-yellow-500 mt-2">⚠️ Warning: Using the payload above may cause the browser to hang or crash. Use with caution.</p>
+                </div>
+            </div>
+
+            <div class="mitigation-section">
+                <h2 class="text-2xl font-semibold mb-3">Mitigation</h2>
+                <p class="mb-4">To mitigate this vulnerability:</p>
+                <ul class="list-disc list-inside mb-4">
+                    <li>Update to Pug version 2.0.4 or higher</li>
+                    <li>Implement template size limits and timeout mechanisms</li>
+                    <li>Avoid rendering untrusted user-supplied templates</li>
+                    <li>Use a template sandbox to isolate potentially dangerous template execution</li>
+                </ul>
+                <pre class="bg-gray-800 p-4 rounded overflow-x-auto">
+// Update command:
+npm update pug --save
+
+// Or pin to a specific safe version:
+npm install pug@3.0.2 --save</pre>
+            </div>
+
+            <div class="references-section">
+                <h2 class="text-2xl font-semibold mb-3">References</h2>
+                <ul class="list-disc list-inside">
+                    <li><a href="https://nvd.nist.gov/vuln/detail/CVE-2019-8331" class="text-blue-400 hover:underline" target="_blank">NIST: CVE-2019-8331</a></li>
+                    <li><a href="https://github.com/pugjs/pug/issues/3000" class="text-blue-400 hover:underline" target="_blank">GitHub Issue: pugjs/pug #3000</a></li>
+                    <li><a href="https://github.com/advisories/GHSA-p5pg-43xh-5r39" class="text-blue-400 hover:underline" target="_blank">GitHub Advisory: GHSA-p5pg-43xh-5r39</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Particle.js Library -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script>
+        // Particle.js configuration
+        particlesJS('particles-js', {
+            "particles": {
+                "number": {
+                    "value": 80,
+                    "density": {
+                        "enable": true,
+                        "value_area": 800
+                    }
+                },
+                "color": {
+                    "value": "#ffffff"
+                },
+                "shape": {
+                    "type": "circle",
+                    "stroke": {
+                        "width": 0,
+                        "color": "#000000"
+                    },
+                    "polygon": {
+                        "nb_sides": 5
+                    }
+                },
+                "opacity": {
+                    "value": 0.5,
+                    "random": false,
+                    "anim": {
+                        "enable": false,
+                        "speed": 1,
+                        "opacity_min": 0.1,
+                        "sync": false
+                    }
+                },
+                "size": {
+                    "value": 3,
+                    "random": true,
+                    "anim": {
+                        "enable": false,
+                        "speed": 40,
+                        "size_min": 0.1,
+                        "sync": false
+                    }
+                },
+                "line_linked": {
+                    "enable": true,
+                    "distance": 150,
+                    "color": "#ffffff",
+                    "opacity": 0.4,
+                    "width": 1
+                },
+                "move": {
+                    "enable": true,
+                    "speed": 6,
+                    "direction": "none",
+                    "random": false,
+                    "straight": false,
+                    "out_mode": "out",
+                    "bounce": false,
+                    "attract": {
+                        "enable": false,
+                        "rotateX": 600,
+                        "rotateY": 1200
+                    }
+                }
+            },
+            "interactivity": {
+                "detect_on": "canvas",
+                "events": {
+                    "onhover": {
+                        "enable": true,
+                        "mode": "grab"
+                    },
+                    "onclick": {
+                        "enable": true,
+                        "mode": "push"
+                    },
+                    "resize": true
+                },
+                "modes": {
+                    "grab": {
+                        "distance": 140,
+                        "line_linked": {
+                            "opacity": 1
+                        }
+                    },
+                    "bubble": {
+                        "distance": 400,
+                        "size": 40,
+                        "duration": 2,
+                        "opacity": 8,
+                        "speed": 3
+                    },
+                    "repulse": {
+                        "distance": 200,
+                        "duration": 0.4
+                    },
+                    "push": {
+                        "particles_nb": 4
+                    },
+                    "remove": {
+                        "particles_nb": 2
+                    }
+                }
+            },
+            "retina_detect": true
+        });
+
+        // Pug template rendering functionality
+        document.getElementById('render-template').addEventListener('click', function() {
+            const template = document.getElementById('pug-template').value;
+            let templateData = {};
+            
+            try {
+                templateData = JSON.parse(document.getElementById('template-data').value);
+            } catch (e) {
+                alert('Invalid JSON data. Please check your template data format.');
+                return;
+            }
+            
+            // Show loading state
+            const resultContainer = document.getElementById('result-container');
+            const renderTime = document.getElementById('render-time');
+            const templateResult = document.getElementById('template-result');
+            
+            resultContainer.classList.remove('hidden');
+            renderTime.textContent = 'Rendering...';
+            templateResult.innerHTML = '';
+            
+            const startTime = performance.now();
+            
+            // Send to backend
+            fetch('/api/render-pug', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ template, data: templateData }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                const endTime = performance.now();
+                const duration = endTime - startTime;
+                
+                renderTime.textContent = `Render time: ${duration.toFixed(2)}ms`;
+                
+                if (data.error) {
+                    templateResult.innerHTML = `<div class="text-red-500">${data.error}</div>`;
+                } else {
+                    templateResult.innerHTML = data.html;
+                }
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+                renderTime.textContent = '';
+                templateResult.innerHTML = `<div class="text-red-500">Error: ${error.message}</div>`;
+            });
+        });
+    </script>
+</body>
+</html>

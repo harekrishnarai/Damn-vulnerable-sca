@@ -10,6 +10,7 @@
   background-color:#010e1f;
   border: 2px solid #010e1f;
   padding: 10px;
+  z-index: 100;
 }
 
 .navbar a {
@@ -26,14 +27,24 @@
 }
 
 #particles-js {
-    position: absolute;
+    position: fixed; /* Change from absolute to fixed */
     width: 100%;
-    height: 100vh;
+    height: 100%;
     background-color: #010e1f;
     background-size: cover;
     background-position: 50% 50%;
     z-index: -1;
+    top: 0;
+    left: 0;
 }
+
+body {
+    background-color: #010e1f;
+    color: #ffffff;
+    min-height: 100vh;
+    position: relative;
+}
+
 .logo-container {
     display: flex;
     justify-content: center;
@@ -50,6 +61,112 @@
     padding: 20px;
     text-align: center;
 }
+
+/* Vulnerability Dashboard Styles */
+.vulnerability-dashboard {
+    max-width: 1200px;
+    margin: 0 auto 40px;
+    padding: 20px;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 20px;
+    margin-top: 30px;
+}
+
+.grid-item {
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.grid-item:hover {
+    transform: translateY(-5px);
+}
+
+.vuln-card {
+    background-color: rgba(30, 41, 59, 0.8);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    color: white;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    transition: box-shadow 0.3s ease;
+}
+
+.vuln-card:hover {
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+}
+
+.vuln-header {
+    padding: 15px;
+    background-color: rgba(17, 24, 39, 0.7);
+    display: flex;
+    align-items: center;
+}
+
+.vuln-icon {
+    font-size: 24px;
+    margin-right: 15px;
+    width: 30px;
+    text-align: center;
+}
+
+.vuln-type {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.vuln-body {
+    padding: 15px;
+    flex-grow: 1;
+}
+
+.vuln-body h3 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 20px;
+    font-weight: bold;
+    color: #60a5fa;
+}
+
+.vuln-body p {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.vuln-footer {
+    padding: 10px 15px;
+    background-color: rgba(17, 24, 39, 0.5);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.vuln-link {
+    color: #93c5fd;
+    text-decoration: none;
+    font-size: 14px;
+    display: inline-flex;
+    align-items: center;
+}
+
+.vuln-link:hover {
+    color: #bfdbfe;
+    text-decoration: underline;
+}
+
+.vuln-link:after {
+    content: '\f061';
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+    margin-left: 5px;
+    font-size: 12px;
+}
+
+/* Original styles */
 .try-these {
     display: flex;
     justify-content: space-around;
@@ -66,28 +183,39 @@
     transform: scale(1.05);
 }
 
+/* Footer styles */
 .wrapper {
   display: flex;
   justify-content: center;
+  margin-top: 40px;
+  padding-bottom: 30px;
+  background-color: transparent;
+  position: relative;
+  z-index: 10;
 }
 
 .wrapper .icon-container {
   position: relative;
   width: 40px;
   height: 40px;
-  background-color: #ffffff;
-  color: #121212;
+  background-color: rgba(30, 41, 59, 0.8);
+  color: #ffffff;
   display: flex;
   align-items: center;
   justify-content: center;
   margin: 0 10px;
   border-radius: 28%;
-  box-shadow: 0 5px 15px -5px rgb(0 0 0 / 10%);
+  box-shadow: 0 5px 15px -5px rgba(0, 0, 0, 0.5);
   cursor: pointer;
   font-size: 20px;
   text-decoration: none;
   opacity: 0.99;
   overflow: hidden;
+  transition: transform 0.3s ease;
+}
+
+.wrapper .icon-container:hover {
+  transform: translateY(-3px);
 }
 
 .wrapper .icon-container::before {
@@ -169,5 +297,13 @@
     height: 45px;
     margin: 0 5px;
     font-size: 18px;
+  }
+  
+  .grid-container {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  }
+  
+  .logo {
+    max-width: 50%;
   }
 }

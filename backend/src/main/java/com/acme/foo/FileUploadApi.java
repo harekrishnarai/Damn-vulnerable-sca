@@ -40,15 +40,18 @@ public class FileUploadApi {
 
 			Path zipPath = Paths.get(UPLOAD_DIR + file.getOriginalFilename() + ".xz");
 			LZMA2Options options = new LZMA2Options();
-			XZOutputStream xz = new XZOutputStream(Files.newOutputStream(zipPath), options);
-
-			byte[] buf = new byte[8192];
-			int size;
-			while ((size = System.in.read(buf)) != -1) {
-				xz.write(buf, 0, size);
+			
+			try (XZOutputStream xz = new XZOutputStream(Files.newOutputStream(zipPath), options);
+				 java.io.InputStream inputStream = Files.newInputStream(path)) {
+				
+				byte[] buf = new byte[8192];
+				int size;
+				while ((size = inputStream.read(buf)) != -1) {
+					xz.write(buf, 0, size);
+				}
+				
+				xz.finish();
 			}
-
-			xz.finish();
 
 			return ResponseEntity.status(HttpStatus.OK).body("File uploaded successfully: " + file.getOriginalFilename() + " -> " + path + " -> " + zipPath);
 		} catch (IOException e) {

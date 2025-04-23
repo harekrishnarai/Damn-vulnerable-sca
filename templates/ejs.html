@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EJS Template Injection - SCAGoat</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="../static/css/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body>
+    <!-- Particle.js Background -->
+    <div id="particles-js"></div>
+
+    <nav class="navbar">
+        <a href="/"><i class="fas fa-home"></i> Home</a>
+        <a href="/markdown"><i class="fas fa-file-alt"></i> Markdown</a>
+        <a href="/handlebars"><i class="fas fa-code"></i> Handlebars</a>
+        <a href="/ejs"><i class="fas fa-file-code"></i> EJS</a>
+        <a href="/serialize"><i class="fas fa-exchange-alt"></i> Serialize</a>
+        <a href="/trimnewlines"><i class="fas fa-cut"></i> Trim-Newlines</a>
+        <a href="/lodash"><i class="fas fa-code"></i> Lodash</a>
+        <a href="/chat-ui"><i class="fas fa-comment"></i> Chat</a>
+        <a href="http://localhost:8080" target="_blank"><i class="fas fa-server"></i> Backend</a>
+    </nav>
+
+    <div class="container mx-auto px-4 py-8">
+        <h1 class="text-3xl font-bold text-white text-center mb-8">EJS Template Injection Vulnerability</h1>
+        
+        <div class="max-w-3xl mx-auto bg-gray-800 bg-opacity-80 p-6 rounded-lg shadow-md mb-8">
+            <div class="mb-6 text-white">
+                <h2 class="text-xl font-bold mb-2"><i class="fas fa-exclamation-triangle text-yellow-500 mr-2"></i>CVE-2022-29078</h2>
+                <p class="mb-4">This demonstrates a critical Remote Code Execution (RCE) vulnerability in EJS versions prior to 3.1.7.</p>
+                <p class="mb-4">The vulnerability allows attackers to execute arbitrary JavaScript code through the outputFunctionName option, resulting in complete server compromise.</p>
+                <div class="bg-red-900 bg-opacity-70 p-3 rounded mt-4">
+                    <p class="text-sm"><strong>CVSS Score:</strong> 9.8 (Critical)</p>
+                    <p class="text-sm"><strong>Vulnerability Type:</strong> Remote Code Execution (RCE)</p>
+                    <p class="text-sm"><strong>Fixed Version:</strong> 3.1.7</p>
+                    <p class="text-sm"><strong>Current Version:</strong> 2.6.1</p>
+                </div>
+            </div>
+
+            <div class="bg-gray-900 bg-opacity-70 p-4 rounded-lg mb-6">
+                <h3 class="text-lg font-bold text-white mb-3">Demonstration</h3>
+                <p class="text-gray-300 mb-4">Enter content to be rendered by the vulnerable EJS template engine:</p>
+                
+                <form id="ejsForm" class="space-y-4">
+                    <div>
+                        <label for="title" class="block text-white text-sm font-bold mb-2">Page Title:</label>
+                        <input type="text" id="title" class="w-full px-3 py-2 rounded-md border border-gray-600 bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="My Page Title">
+                    </div>
+                    
+                    <div>
+                        <label for="content" class="block text-white text-sm font-bold mb-2">Page Content:</label>
+                        <textarea id="content" rows="3" class="w-full px-3 py-2 rounded-md border border-gray-600 bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Enter some content here..."></textarea>
+                    </div>
+                    
+                    <div>
+                        <label for="outputFunctionName" class="block text-white text-sm font-bold mb-2">Output Function Name (Exploit Vector):</label>
+                        <div class="flex gap-2">
+                            <input type="text" id="outputFunctionName" class="flex-1 px-3 py-2 rounded-md border border-gray-600 bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="echo">
+                            <button type="button" id="maliciousFunction" class="bg-red-600 hover:bg-red-700 text-white px-3 py-2 rounded">Insert Exploit</button>
+                        </div>
+                        <p class="mt-1 text-xs text-red-400">Warning: A malicious value here can lead to code execution!</p>
+                    </div>
+                    
+                    <div>
+                        <label for="ejsTemplate" class="block text-white text-sm font-bold mb-2">EJS Template:</label>
+                        <textarea id="ejsTemplate" rows="5" class="w-full px-3 py-2 rounded-md border border-gray-600 bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 font-mono text-sm" readonly></textarea>
+                    </div>
+                    
+                    <button type="button" id="renderEjs" class="w-full bg-green-600 hover:bg-green-700 text-white py-2 rounded-md transition duration-200 flex items-center justify-center">
+                        <i class="fas fa-play mr-2"></i> Render Template
+                    </button>
+                </form>
+            </div>
+            
+            <div class="bg-gray-900 bg-opacity-70 p-4 rounded-lg">
+                <h3 class="text-lg font-bold text-white mb-3">Result</h3>
+                <div id="ejsResult" class="p-4 rounded-md bg-gray-800 min-h-[100px] text-white"></div>
+                
+                <div id="ejsConsoleLog" class="mt-4">
+                    <h4 class="text-white text-sm font-bold mb-2">Console Output:</h4>
+                    <pre id="ejsConsoleOutput" class="p-3 rounded-md bg-black text-green-400 font-mono text-sm min-h-[50px] overflow-auto max-h-[150px]">No console output yet</pre>
+                </div>
+                
+                <div id="ejsVulnerabilityStatus" class="mt-4 p-3 rounded-md bg-gray-700 text-white">
+                    <p>Vulnerability status: <span id="ejsVulnStatus">Untested</span></p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="max-w-3xl mx-auto bg-yellow-800 bg-opacity-70 p-4 rounded-lg">
+            <h3 class="text-lg font-bold text-white mb-2"><i class="fas fa-info-circle mr-2"></i>About This Vulnerability</h3>
+            <p class="text-white mb-2">EJS (Embedded JavaScript templates) is a popular templating engine for Node.js applications that allows embedding JavaScript code within HTML templates.</p>
+            <p class="text-white mb-2">CVE-2022-29078 is a vulnerability where the outputFunctionName option can be exploited to execute arbitrary code when rendering templates.</p>
+            <p class="text-white">This vulnerability impacts a wide range of applications that use EJS templates and can lead to full server compromise if exploited successfully.</p>
+        </div>
+    </div>
+
+    <!-- Particle.js Library -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <!-- EJS -->
+    <script src="https://cdn.jsdelivr.net/npm/ejs@2.6.1/ejs.min.js"></script>
+    
+    <script>
+        // Particle.js configuration
+        particlesJS('particles-js', {
+            "particles": {
+                "number": {"value": 80, "density": {"enable": true, "value_area": 800}},
+                "color": {"value": "#ffffff"},
+                "shape": {
+                    "type": "circle",
+                    "stroke": {"width": 0, "color": "#000000"},
+                    "polygon": {"nb_sides": 5}
+                },
+                "opacity": {
+                    "value": 0.5, "random": false,
+                    "anim": {"enable": false, "speed": 1, "opacity_min": 0.1, "sync": false}
+                },
+                "size": {
+                    "value": 3, "random": true,
+                    "anim": {"enable": false, "speed": 40, "size_min": 0.1, "sync": false}
+                },
+                "line_linked": {
+                    "enable": true, "distance": 150, "color": "#ffffff", "opacity": 0.4, "width": 1
+                },
+                "move": {
+                    "enable": true, "speed": 6, "direction": "none", "random": false, "straight": false,
+                    "out_mode": "out", "bounce": false,
+                    "attract": {"enable": false, "rotateX": 600, "rotateY": 1200}
+                }
+            },
+            "interactivity": {
+                "detect_on": "canvas",
+                "events": {
+                    "onhover": {"enable": true, "mode": "grab"},
+                    "onclick": {"enable": true, "mode": "push"},
+                    "resize": true
+                },
+                "modes": {
+                    "grab": {"distance": 140, "line_linked": {"opacity": 1}},
+                    "bubble": {"distance": 400, "size": 40, "duration": 2, "opacity": 8, "speed": 3},
+                    "repulse": {"distance": 200, "duration": 0.4},
+                    "push": {"particles_nb": 4},
+                    "remove": {"particles_nb": 2}
+                }
+            },
+            "retina_detect": true
+        });
+
+        // Override console.log to capture output
+        const originalConsoleLog = console.log;
+        let ejsLogOutput = [];
+        
+        console.log = function() {
+            // Call the original console.log
+            originalConsoleLog.apply(console, arguments);
+            
+            // Store the logged message
+            const message = Array.from(arguments).map(arg => 
+                typeof arg === 'object' ? JSON.stringify(arg) : String(arg)
+            ).join(' ');
+            
+            ejsLogOutput.push(message);
+            
+            // Update the console output div
+            const consoleOutput = document.getElementById('ejsConsoleOutput');
+            consoleOutput.textContent = ejsLogOutput.join('\n');
+            
+            // If we detect a successful exploit, update vulnerability status
+            if (message.includes('EJS RCE')) {
+                document.getElementById('ejsVulnStatus').textContent = 'VULNERABLE! Code execution confirmed';
+                document.getElementById('ejsVulnStatus').className = 'font-bold text-red-500';
+            }
+        };
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Update template whenever inputs change
+            const updateTemplate = function() {
+                const title = document.getElementById('title').value || 'My Page Title';
+                const content = document.getElementById('content').value || 'Enter some content here...';
+                
+                const template = `<!DOCTYPE html>
+<html>
+<head>
+  <title><%= title %></title>
+</head>
+<body>
+  <h1><%= title %></h1>
+  <div class="content">
+    <%= content %>
+  </div>
+</body>
+</html>`;
+                
+                document.getElementById('ejsTemplate').value = template;
+            };
+            
+            // Initial template update
+            updateTemplate();
+            
+            // Set up event listeners for inputs
+            document.getElementById('title').addEventListener('input', updateTemplate);
+            document.getElementById('content').addEventListener('input', updateTemplate);
+            
+            // Malicious function button
+            document.getElementById('maliciousFunction').addEventListener('click', function() {
+                document.getElementById('outputFunctionName').value = 'console.log(`EJS RCE`,process.env)';
+            });
+            
+            // Render EJS template button
+            document.getElementById('renderEjs').addEventListener('click', function() {
+                try {
+                    // Reset console output
+                    ejsLogOutput = [];
+                    document.getElementById('ejsConsoleOutput').textContent = 'No console output yet';
+                    document.getElementById('ejsVulnStatus').textContent = 'Testing...';
+                    document.getElementById('ejsVulnStatus').className = 'font-bold text-yellow-500';
+                    
+                    // Get user input
+                    const title = document.getElementById('title').value || 'My Page Title';
+                    const content = document.getElementById('content').value || 'Enter some content here...';
+                    const outputFunctionName = document.getElementById('outputFunctionName').value || 'echo';
+                    const templateSource = document.getElementById('ejsTemplate').value;
+                    
+                    // Compile and render EJS template
+                    const options = {
+                        outputFunctionName: outputFunctionName
+                    };
+                    
+                    const html = ejs.render(templateSource, { title, content }, options);
+                    
+                    // Display the result
+                    document.getElementById('ejsResult').innerHTML = html;
+                    
+                    // If no exploit was detected, update status
+                    setTimeout(() => {
+                        const vulnStatus = document.getElementById('ejsVulnStatus');
+                        if (vulnStatus.textContent === 'Testing...') {
+                            if (outputFunctionName.includes('console.log')) {
+                                vulnStatus.textContent = 'Potential vulnerability detected!';
+                                vulnStatus.className = 'font-bold text-orange-500';
+                            } else {
+                                vulnStatus.textContent = 'No vulnerability detected with this input';
+                                vulnStatus.className = 'font-bold text-green-500';
+                            }
+                        }
+                    }, 500);
+                    
+                } catch (error) {
+                    // Handle errors
+                    document.getElementById('ejsResult').innerHTML = `<div class="text-red-500">Error: ${error.message}</div>`;
+                    console.log(`EJS Template Error: ${error.message}`);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

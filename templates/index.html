@@ -7,14 +7,106 @@
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link href="../static/css/style.css" rel="stylesheet"> <!-- Add this line to include style.css -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-   
+    <style>
+        /* Navbar dropdown styles */
+        .nav-dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: rgba(17, 24, 39, 0.95);
+            min-width: 200px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.5);
+            z-index: 1000;
+            border-radius: 5px;
+            padding: 8px 0;
+        }
+        .nav-dropdown:hover .dropdown-content {
+            display: block;
+        }
+        .dropdown-content a {
+            padding: 8px 16px;
+            text-decoration: none;
+            display: block;
+            transition: background-color 0.3s;
+        }
+        .dropdown-content a:hover {
+            background-color: rgba(55, 65, 81, 0.8);
+        }
+        .dropdown-content .nav-divider {
+            height: 1px;
+            margin: 4px 0;
+            background-color: rgba(75, 85, 99, 0.5);
+        }
+        .dropdown-title {
+            padding: 10px 15px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+    </style>
 </head>
 <body>
     <nav class="navbar">
-        <a href="#home"><i class="fas fa-home"></i> Home</a>
-        <a href="/markdown"><i class="fas fa-file-alt"></i> Markdown</a>
-        <a href="/checkip"><i class="fas fa-search"></i> Checkip</a>
+        <a href="/" class="active"><i class="fas fa-home"></i> Home</a>
+        
+        <!-- Frontend Vulnerabilities Dropdown -->
+        <div class="nav-dropdown">
+            <div class="dropdown-title">
+                <i class="fas fa-code"></i> Frontend
+                <i class="fas fa-caret-down ml-1"></i>
+            </div>
+            <div class="dropdown-content">
+                <a href="/markdown"><i class="fas fa-file-alt fa-fw"></i> Markdown (CVE-2017-16114)</a>
+                <a href="/pug"><i class="fas fa-file-code fa-fw"></i> Pug (CVE-2019-8331)</a>
+                <a href="/lodash"><i class="fas fa-code fa-fw"></i> Lodash (CVE-2019-10744)</a>
+                <a href="/dotprop"><i class="fas fa-dot-circle fa-fw"></i> Dot-Prop (CVE-2020-8116)</a>
+            </div>
+        </div>
+        
+        <!-- Node.js Vulnerabilities Dropdown -->
+        <div class="nav-dropdown">
+            <div class="dropdown-title">
+                <i class="fab fa-node-js"></i> Node.js
+                <i class="fas fa-caret-down ml-1"></i>
+            </div>
+            <div class="dropdown-content">
+                <a href="/trimnewlines"><i class="fas fa-cut fa-fw"></i> Trim-Newlines (CVE-2021-33623)</a>
+                
+                <a href="/checkip"><i class="fas fa-search fa-fw"></i> Checkip (SSRF)</a>
+            </div>
+        </div>
+        
+        <!-- Realtime Communications -->
+        <div class="nav-dropdown">
+            <div class="dropdown-title">
+                <i class="fas fa-exchange-alt"></i> Realtime
+                <i class="fas fa-caret-down ml-1"></i>
+            </div>
+            <div class="dropdown-content">
+                <a href="/chat-ui"><i class="fas fa-comment fa-fw"></i> WebSocket (CVE-2020-13935)</a>
+            </div>
+        </div>
+        
+        <!-- Java Backend Vulnerabilities -->
+        <div class="nav-dropdown">
+            <div class="dropdown-title">
+                <i class="fab fa-java"></i> Backend
+                <i class="fas fa-caret-down ml-1"></i>
+            </div>
+            <div class="dropdown-content">
+                <a href="http://localhost:8080" target="_blank"><i class="fas fa-server fa-fw"></i> Jackson-Databind (CVE-2020-9547)</a>
+                <a href="http://localhost:8080/api/files/upload" target="_blank"><i class="fas fa-file-upload fa-fw"></i> XZ-Java (Malicious)</a>
+                <a href="http://localhost:8080/log4j" target="_blank"><i class="fas fa-bug fa-fw"></i> Log4j (CVE-2021-44228)</a>
+            </div>
+        </div>
+        
+        <!-- Direct link to backend for convenience -->
+        <a href="http://localhost:8080" target="_blank"><i class="fas fa-external-link-alt"></i> Backend</a>
     </nav>
+    
     <!-- Particle.js Background -->
     <div id="particles-js"></div>
 
@@ -28,6 +120,163 @@
         <h1 class="text-3xl font-bold text-white mb-4">Welcome to SCAGoat</h1>
         <p class="text-lg text-white mb-6">SCAGoat is a vulnerable web application that is designed to help security enthusiasts, developers, and students to discover and mitigate security vulnerabilities in their applications. It is a collection of security vulnerabilities and misconfigurations that can be used to test the security tools and applications.</p>
         <p class="text-lg text-white mb-6">SCAGoat is designed to be used as a learning tool and is not recommended to be used in a production environment.</p>
+    </div>
+    
+    <!-- Vulnerability Dashboard -->
+    <div class="vulnerability-dashboard">
+        <h2 class="text-2xl font-bold text-white mb-4 text-center">Vulnerability Dashboard</h2>
+        <div class="grid-container">
+            <div class="grid-item" onclick="window.location.href='/markdown'">
+                <div class="vuln-card">
+                    <div class="vuln-header">
+                        <i class="fas fa-file-alt vuln-icon"></i>
+                        <span class="vuln-type">Markdown</span>
+                    </div>
+                    <div class="vuln-body">
+                        <h3>CVE-2017-16114</h3>
+                        <p>Marked vulnerability allowing XSS attacks</p>
+                    </div>
+                    <div class="vuln-footer">
+                        <a href="https://github.com/markedjs/marked/issues/926" target="_blank" class="vuln-link">Learn More</a>
+                    </div>
+                </div>
+            </div>
+            <div class="grid-item" onclick="window.location.href='/trimnewlines'">
+                <div class="vuln-card">
+                    <div class="vuln-header">
+                        <i class="fas fa-cut vuln-icon"></i>
+                        <span class="vuln-type">Trim-Newlines</span>
+                    </div>
+                    <div class="vuln-body">
+                        <h3>CVE-2021-33623</h3>
+                        <p>ReDoS vulnerability in trim-newlines package</p>
+                    </div>
+                    <div class="vuln-footer">
+                        <a href="https://nvd.nist.gov/vuln/detail/CVE-2021-33623" target="_blank" class="vuln-link">Learn More</a>
+                    </div>
+                </div>
+            </div>
+            <div class="grid-item" onclick="window.location.href='/lodash'">
+                <div class="vuln-card">
+                    <div class="vuln-header">
+                        <i class="fas fa-code vuln-icon"></i>
+                        <span class="vuln-type">Lodash</span>
+                    </div>
+                    <div class="vuln-body">
+                        <h3>CVE-2019-10744</h3>
+                        <p>Prototype pollution vulnerability in Lodash</p>
+                    </div>
+                    <div class="vuln-footer">
+                        <a href="https://nvd.nist.gov/vuln/detail/CVE-2019-10744" target="_blank" class="vuln-link">Learn More</a>
+                    </div>
+                </div>
+            </div>
+            <div class="grid-item" onclick="window.open('http://localhost:8080', '_blank')">
+                <div class="vuln-card">
+                    <div class="vuln-header">
+                        <i class="fas fa-server vuln-icon"></i>
+                        <span class="vuln-type">Jackson-Databind</span>
+                    </div>
+                    <div class="vuln-body">
+                        <h3>CVE-2020-9547</h3>
+                        <p>Deserialization vulnerability in jackson-databind</p>
+                    </div>
+                    <div class="vuln-footer">
+                        <a href="https://nvd.nist.gov/vuln/detail/CVE-2020-9547" target="_blank" class="vuln-link">Learn More</a>
+                    </div>
+                </div>
+            </div>
+            <div class="grid-item" onclick="window.open('http://localhost:8080/api/files/upload', '_blank')">
+                <div class="vuln-card">
+                    <div class="vuln-header">
+                        <i class="fas fa-file-upload vuln-icon"></i>
+                        <span class="vuln-type">XZ-Java</span>
+                    </div>
+                    <div class="vuln-body">
+                        <h3>Malicious Library</h3>
+                        <p>XZ-Java compromised library vulnerability</p>
+                    </div>
+                    <div class="vuln-footer">
+                        <a href="https://youtu.be/sWAzUP_uC7k" target="_blank" class="vuln-link">Demo Video</a>
+                    </div>
+                </div>
+            </div>
+            <div class="grid-item" onclick="window.location.href='/chat-ui'">
+                <div class="vuln-card">
+                    <div class="vuln-header">
+                        <i class="fas fa-comment vuln-icon"></i>
+                        <span class="vuln-type">WebSocket</span>
+                    </div>
+                    <div class="vuln-body">
+                        <h3>CVE-2020-13935</h3>
+                        <p>Spring WebSocket vulnerability</p>
+                    </div>
+                    <div class="vuln-footer">
+                        <a href="https://nvd.nist.gov/vuln/detail/CVE-2020-13935" target="_blank" class="vuln-link">Learn More</a>
+                    </div>
+                </div>
+            </div>
+            <div class="grid-item" onclick="window.open('http://localhost:8080/log4j', '_blank')">
+                <div class="vuln-card">
+                    <div class="vuln-header">
+                        <i class="fas fa-bug vuln-icon"></i>
+                        <span class="vuln-type">Log4j</span>
+                    </div>
+                    <div class="vuln-body">
+                        <h3>CVE-2021-44228</h3>
+                        <p>Log4Shell vulnerability in Log4j</p>
+                    </div>
+                    <div class="vuln-footer">
+                        <a href="https://youtu.be/BljNgBZxbgo" target="_blank" class="vuln-link">Demo Video</a>
+                    </div>
+                </div>
+            </div>
+            <div class="grid-item" onclick="window.location.href='/nodenotifier'">
+                <div class="vuln-card">
+                    <div class="vuln-header">
+                        <i class="fas fa-bell vuln-icon"></i>
+                        <span class="vuln-type">Node-Notifier</span>
+                    </div>
+                    <div class="vuln-body">
+                        <h3>CVE-2020-7789</h3>
+                        <p>Command execution vulnerability in node-notifier</p>
+                    </div>
+                    <div class="vuln-footer">
+                        <a href="https://nvd.nist.gov/vuln/detail/CVE-2020-7789" target="_blank" class="vuln-link">Learn More</a>
+                    </div>
+                </div>
+            </div>
+            <div class="grid-item" onclick="window.location.href='/pug'">
+                <div class="vuln-card">
+                    <div class="vuln-header">
+                        <i class="fas fa-file-code vuln-icon"></i>
+                        <span class="vuln-type">Pug</span>
+                    </div>
+                    <div class="vuln-body">
+                        <h3>CVE-2019-8331</h3>
+                        <p>Denial of Service vulnerability in Pug</p>
+                    </div>
+                    <div class="vuln-footer">
+                        <a href="https://nvd.nist.gov/vuln/detail/CVE-2019-8331" target="_blank" class="vuln-link">Learn More</a>
+                    </div>
+                </div>
+            </div>
+            <div class="grid-item" onclick="window.location.href='/dotprop'">
+                <div class="vuln-card">
+                    <div class="vuln-header">
+                        <i class="fas fa-dot-circle vuln-icon"></i>
+                        <span class="vuln-type">Dot-Prop</span>
+                    </div>
+                    <div class="vuln-body">
+                        <h3>CVE-2020-8116</h3>
+                        <p>Prototype pollution vulnerability in dot-prop</p>
+                    </div>
+                    <div class="vuln-footer">
+                        <a href="https://nvd.nist.gov/vuln/detail/CVE-2020-8116" target="_blank" class="vuln-link">Learn More</a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- Particle.js Library -->
