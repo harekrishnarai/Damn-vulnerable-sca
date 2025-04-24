@@ -98,7 +98,7 @@ cd ..
 - Use in isolated, educational environments only.
 
 ### SCA Goat HomePage
-![SCAGoat_HomePage](https://github.com/harekrishnarai/Damn-vulnerable-sca/assets/63994966/ffab6935-b44d-4925-a435-47d4a731702b)
+![SCAGoat HomePage](https://github.com/user-attachments/assets/36cf4e09-5279-4b62-89ed-4fd5160f75c0)
 
 ## Vulnerability Dashboard
 
