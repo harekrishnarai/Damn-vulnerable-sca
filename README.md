@@ -1,6 +1,6 @@
 <p align="center">
     <img src="/static/images/logo.png" alt="SCA Goat">
-     <br>SCA Goat<br> Navigating SCA Vulnerabilities, Empowering Mastery<br> <p align="center">
+     <br>SCA Goat<br> Navigating SCA Vulnerabilities, Empowering Mastery new<br> <p align="center">
 </p>
 </p>
 
