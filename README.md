@@ -37,6 +37,10 @@ In addition, there is one compromised package, that lacks a CVE, but is maliciou
 | CVE-2019-10744             | lodash          | [https://nvd.nist.gov/vuln/detail/CVE-2019-10744](https://nvd.nist.gov/vuln/detail/CVE-2019-10744)|
 | CVE-2019-8331              | pug             | [https://nvd.nist.gov/vuln/detail/CVE-2019-8331](https://nvd.nist.gov/vuln/detail/CVE-2019-8331)|
 | CVE-2020-8116              | dot-prop        | [https://nvd.nist.gov/vuln/detail/CVE-2020-8116](https://nvd.nist.gov/vuln/detail/CVE-2020-8116)|
+| CVE-2020-7789              | node-notifier   | [https://nvd.nist.gov/vuln/detail/CVE-2020-7789](https://nvd.nist.gov/vuln/detail/CVE-2020-7789)|
+| CVE-2024-21534             | jsonpath-plus   | [https://nvd.nist.gov/vuln/detail/CVE-2024-21534](https://nvd.nist.gov/vuln/detail/CVE-2024-21534)|
+| CVE-2021-44906             | minimist        | [https://nvd.nist.gov/vuln/detail/CVE-2021-44906](https://nvd.nist.gov/vuln/detail/CVE-2021-44906)|
+| CVE-2020-7660              | serialize-javascript | [https://nvd.nist.gov/vuln/detail/CVE-2020-7660](https://nvd.nist.gov/vuln/detail/CVE-2020-7660)|
 | Malicious Package (No CVE) | xz-java         | [https://central.sonatype.com/artifact/io.github.xz-java/xz-java](https://central.sonatype.com/artifact/io.github.xz-java/xz-java)|
 
 
@@ -113,6 +117,10 @@ SCAGoat features an interactive vulnerability dashboard that allows users to exp
 - **Log4j (CVE-2021-44228)**: Log4Shell vulnerability demonstration
 - **Pug (CVE-2019-8331)**: Denial of Service vulnerability in the template engine
 - **Dot-Prop (CVE-2020-8116)**: Prototype pollution vulnerability allowing property manipulation
+- **Node-Notifier (CVE-2020-7789)**: OS command injection on Linux via unsanitized options
+- **JSONPath-Plus (CVE-2024-21534)**: Critical RCE via unsafe vm usage (CVSS 9.8)
+- **Minimist (CVE-2021-44906)**: Prototype pollution in argument parser
+- **Serialize-JavaScript (CVE-2020-7660)**: XSS via arbitrary code injection
 
 Each vulnerability includes an interactive demo to help security professionals, developers, and students understand how these vulnerabilities work and how they can be exploited.
 

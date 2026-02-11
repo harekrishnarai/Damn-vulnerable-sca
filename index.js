@@ -37,6 +37,10 @@ console.log('- Malicious Package: XZ-Java backend demo');
 console.log('- CVE-2020-9547: jackson-databind backend demo');
 console.log('- CVE-2019-8331: pug v2.0.4 (Denial of Service vulnerability)');
 console.log('- CVE-2020-8116: dot-prop v4.2.0 (Prototype pollution vulnerability)');
+console.log('- CVE-2020-7789: node-notifier v5.4.4 (Command injection vulnerability)');
+console.log('- CVE-2024-21534: jsonpath-plus v7.0.0 (RCE vulnerability)');
+console.log('- CVE-2021-44906: minimist v1.2.0 (Prototype pollution vulnerability)');
+console.log('- CVE-2019-16769: serialize-javascript v2.1.1 (XSS vulnerability)');
 
 // Basic routes
 app.get('/', function (req, res) {
@@ -763,6 +767,22 @@ app.get('/dotprop', function (req, res) {
   res.sendFile(__dirname + '/templates/dotprop.html');
 });
 
+app.get('/serialize', function (req, res) {
+  res.sendFile(__dirname + '/templates/serialize.html');
+});
+
+app.get('/nodenotifier', function (req, res) {
+  res.sendFile(__dirname + '/templates/nodenotifier.html');
+});
+
+app.get('/jsonpath', function (req, res) {
+  res.sendFile(__dirname + '/templates/jsonpath.html');
+});
+
+app.get('/minimist', function (req, res) {
+  res.sendFile(__dirname + '/templates/minimist.html');
+});
+
 // Add the API endpoint for rendering Pug templates
 app.post('/api/render-pug', function (req, res) {
   const template = req.body.template;
@@ -886,6 +906,54 @@ app.post('/api/dotprop', function (req, res) {
     res.json({
       error: 'Error: ' + err.message
     });
+  }
+});
+
+// CVE-2020-7789: node-notifier command injection
+app.post('/api/notify', function (req, res) {
+  const { appName, title, message } = req.body || {};
+  const notifier = require('node-notifier');
+  try {
+    // Vulnerable: appName passed as array - on Linux with notify-send, unsanitized input can lead to command injection
+    notifier.notify({
+      title: title || 'Notification',
+      message: message || 'Demo',
+      appName: appName ? [String(appName)] : undefined
+    }, function (err) {
+      if (err) {
+        res.json({ error: err.message, warning: 'Vulnerable node-notifier v5.4.4 (CVE-2020-7789) - command injection possible on Linux' });
+      } else {
+        res.json({ success: true, warning: 'CVE-2020-7789: Unsanitized options passed to shell' });
+      }
+    });
+  } catch (err) {
+    res.json({ error: err.message });
+  }
+});
+
+// CVE-2024-21534: jsonpath-plus RCE via unsafe vm usage
+app.post('/api/jsonpath', function (req, res) {
+  const { path: jsonPath, data } = req.body || {};
+  try {
+    const { JSONPath } = require('jsonpath-plus');
+    const parsed = typeof data === 'string' ? JSON.parse(data) : data;
+    // Vulnerable: jsonpath-plus < 10.2.0 uses vm unsafely with user input
+    const result = JSONPath({ path: jsonPath || '$.', json: parsed });
+    res.json({ result });
+  } catch (err) {
+    res.json({ error: err.message });
+  }
+});
+
+// CVE-2021-44906: minimist prototype pollution (used via dependency or direct)
+app.post('/api/minimist', function (req, res) {
+  const args = req.body.args || [];
+  try {
+    const parse = require('minimist');
+    const result = parse(args);
+    res.json({ result });
+  } catch (err) {
+    res.json({ error: err.message });
   }
 });
 
