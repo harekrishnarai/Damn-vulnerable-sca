@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minimist Prototype Pollution - SCAGoat</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="../static/css/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body>
+    <div id="particles-js"></div>
+
+    <nav class="navbar">
+        <a href="/"><i class="fas fa-home"></i> Home</a>
+        <a href="/markdown"><i class="fas fa-file-alt"></i> Markdown</a>
+        <a href="/checkip"><i class="fas fa-search"></i> Checkip</a>
+        <a href="/trimnewlines"><i class="fas fa-cut"></i> Trim-Newlines</a>
+        <a href="/minimist" class="active"><i class="fas fa-sliders-h"></i> Minimist</a>
+        <a href="/chat-ui"><i class="fas fa-comment"></i> Chat</a>
+        <a href="http://localhost:8080" target="_blank"><i class="fas fa-server"></i> Backend</a>
+    </nav>
+
+    <div class="container mx-auto px-4 py-8">
+        <h1 class="text-3xl font-bold text-white text-center mb-8">Minimist Prototype Pollution Vulnerability</h1>
+        
+        <div class="max-w-3xl mx-auto bg-gray-800 bg-opacity-80 p-6 rounded-lg shadow-md mb-8">
+            <div class="mb-6 text-white">
+                <h2 class="text-xl font-bold mb-2"><i class="fas fa-exclamation-triangle text-yellow-500 mr-2"></i>CVE-2021-44906</h2>
+                <p class="mb-4">minimist before 1.2.6 (and &lt;0.2.4) is vulnerable to prototype pollution. Parsing malicious argument strings can pollute the Object prototype, potentially leading to denial of service or other security impacts.</p>
+                <div class="bg-red-900 bg-opacity-70 p-3 rounded mt-4">
+                    <p class="text-sm"><strong>CVSS Score:</strong> 7.3 (High)</p>
+                    <p class="text-sm"><strong>Vulnerability Type:</strong> Prototype Pollution</p>
+                    <p class="text-sm"><strong>Fixed Version:</strong> 1.2.6+</p>
+                    <p class="text-sm"><strong>Current Version:</strong> 1.2.0 (Vulnerable)</p>
+                </div>
+            </div>
+
+            <div class="bg-gray-900 bg-opacity-70 p-4 rounded-lg mb-6">
+                <h3 class="text-lg font-bold text-white mb-3">Demonstration</h3>
+                <p class="text-gray-300 mb-4">Parse command-line style arguments. Try a prototype pollution payload like <code>--__proto__.polluted true</code>:</p>
+                
+                <form id="minimistForm" class="space-y-4">
+                    <div>
+                        <label for="args" class="block text-white text-sm font-bold mb-2">Arguments (space-separated):</label>
+                        <input type="text" id="args" class="w-full px-3 py-2 rounded-md border border-gray-600 bg-gray-700 text-white font-mono" 
+                            placeholder="e.g., --foo bar --__proto__.polluted true" value="--foo bar">
+                    </div>
+                    <button type="submit" class="w-full bg-red-600 hover:bg-red-700 text-white py-2 rounded-md transition">
+                        <i class="fas fa-play mr-2"></i>Parse Arguments
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script>
+        particlesJS('particles-js', {
+            "particles": {"number": {"value": 80, "density": {"enable": true, "value_area": 800}}, "color": {"value": "#ffffff"},
+            "shape": {"type": "circle", "stroke": {"width": 0}}, "opacity": {"value": 0.5}, "size": {"value": 3, "random": true},
+            "line_linked": {"enable": true, "distance": 150, "opacity": 0.4}, "move": {"enable": true, "speed": 6},
+            "interactivity": {"detect_on": "canvas", "events": {"onhover": {"enable": true}, "onclick": {"enable": true}}},
+            "retina_detect": true
+        });
+
+        document.getElementById('minimistForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const argsStr = document.getElementById('args').value;
+            const args = argsStr.trim() ? argsStr.trim().split(/\s+/) : [];
+            fetch('/api/minimist', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ args })
+            })
+            .then(r => r.json())
+            .then(data => {
+                if (data.error) alert('Error: ' + data.error);
+                else alert('Parsed: ' + JSON.stringify(data.result, null, 2));
+            })
+            .catch(err => alert('Error: ' + err.message));
+        });
+    </script>
+</body>
+</html>

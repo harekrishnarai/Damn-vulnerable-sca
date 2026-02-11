@@ -63,6 +63,7 @@
                 <a href="/pug"><i class="fas fa-file-code fa-fw"></i> Pug (CVE-2019-8331)</a>
                 <a href="/lodash"><i class="fas fa-code fa-fw"></i> Lodash (CVE-2019-10744)</a>
                 <a href="/dotprop"><i class="fas fa-dot-circle fa-fw"></i> Dot-Prop (CVE-2020-8116)</a>
+                <a href="/serialize"><i class="fas fa-exchange-alt fa-fw"></i> Serialize-JS (CVE-2020-7660)</a>
             </div>
         </div>
         
@@ -74,7 +75,9 @@
             </div>
             <div class="dropdown-content">
                 <a href="/trimnewlines"><i class="fas fa-cut fa-fw"></i> Trim-Newlines (CVE-2021-33623)</a>
-                
+                <a href="/nodenotifier"><i class="fas fa-bell fa-fw"></i> Node-Notifier (CVE-2020-7789)</a>
+                <a href="/jsonpath"><i class="fas fa-code fa-fw"></i> JSONPath-Plus (CVE-2024-21534)</a>
+                <a href="/minimist"><i class="fas fa-sliders-h fa-fw"></i> Minimist (CVE-2021-44906)</a>
                 <a href="/checkip"><i class="fas fa-search fa-fw"></i> Checkip (SSRF)</a>
             </div>
         </div>
@@ -273,6 +276,51 @@
                     </div>
                     <div class="vuln-footer">
                         <a href="https://nvd.nist.gov/vuln/detail/CVE-2020-8116" target="_blank" class="vuln-link">Learn More</a>
+                    </div>
+                </div>
+            </div>
+            <div class="grid-item" onclick="window.location.href='/serialize'">
+                <div class="vuln-card">
+                    <div class="vuln-header">
+                        <i class="fas fa-exchange-alt vuln-icon"></i>
+                        <span class="vuln-type">Serialize-JavaScript</span>
+                    </div>
+                    <div class="vuln-body">
+                        <h3>CVE-2019-16769 / CVE-2020-7660</h3>
+                        <p>XSS via arbitrary code injection in serialize-javascript</p>
+                    </div>
+                    <div class="vuln-footer">
+                        <a href="https://nvd.nist.gov/vuln/detail/CVE-2020-7660" target="_blank" class="vuln-link">Learn More</a>
+                    </div>
+                </div>
+            </div>
+            <div class="grid-item" onclick="window.location.href='/jsonpath'">
+                <div class="vuln-card">
+                    <div class="vuln-header">
+                        <i class="fas fa-code vuln-icon"></i>
+                        <span class="vuln-type">JSONPath-Plus</span>
+                    </div>
+                    <div class="vuln-body">
+                        <h3>CVE-2024-21534</h3>
+                        <p>Critical RCE via unsafe vm usage (CVSS 9.8)</p>
+                    </div>
+                    <div class="vuln-footer">
+                        <a href="https://nvd.nist.gov/vuln/detail/CVE-2024-21534" target="_blank" class="vuln-link">Learn More</a>
+                    </div>
+                </div>
+            </div>
+            <div class="grid-item" onclick="window.location.href='/minimist'">
+                <div class="vuln-card">
+                    <div class="vuln-header">
+                        <i class="fas fa-sliders-h vuln-icon"></i>
+                        <span class="vuln-type">Minimist</span>
+                    </div>
+                    <div class="vuln-body">
+                        <h3>CVE-2021-44906</h3>
+                        <p>Prototype pollution in argument parser</p>
+                    </div>
+                    <div class="vuln-footer">
+                        <a href="https://nvd.nist.gov/vuln/detail/CVE-2021-44906" target="_blank" class="vuln-link">Learn More</a>
                     </div>
                 </div>
             </div>
