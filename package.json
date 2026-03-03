@@ -22,7 +22,7 @@
     "marked": "^0.3.5",
     "node-fetch": "^3.3.2",
     "pug": "^2.0.4",
-    "serialize-javascript": "2.1.1",
+    "serialize-javascript": "7.0.3",
     "trim-newlines": "4.0.0",
     "ws": "6.2.1"
   },
